@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resurface — Docs | Retro Action Item Tracker &amp; Accountability for Jira</title>
+    <meta
+      name="description"
+      content="Documentation for Resurface: turn retro and meeting action items into owned, due-dated Jira issues that resurface until they're done. Capture, nudges, carryover, dashboards, and accountability metrics."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C5BD6'/%3E%3Cg stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8.5 16.3 L13.2 21.1 L23 9'/%3E%3Cpath d='M18.3 9.4 L23 9 L22.5 13.7'/%3E%3C/g%3E%3C/svg%3E" />
+    <style>
+      :root {
+        --brand-top: #4c9aff;
+        --brand: #0c5bd6;
+        --brand-deep: #09367e;
+        --ink: #172b4d;
+        --muted: #5e6c84;
+        --line: #dfe1e6;
+        --bg: #ffffff;
+        --bg-soft: #f4f5f7;
+        --code-bg: #f1f4f9;
+        --radius: 12px;
+        --maxw: 880px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--bg);
+        font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: var(--brand);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      header.hero {
+        background: linear-gradient(160deg, var(--brand-top), var(--brand-deep));
+        color: #fff;
+        padding: 56px 0 48px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .brand .logo {
+        width: 48px;
+        height: 48px;
+        flex: none;
+      }
+      .brand h1 {
+        margin: 0;
+        font-size: 26px;
+        letter-spacing: -0.01em;
+      }
+      header.hero p.tag {
+        margin: 18px 0 0;
+        font-size: 19px;
+        max-width: 620px;
+        color: rgba(255, 255, 255, 0.92);
+      }
+      header.hero .badges {
+        margin-top: 22px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .badge {
+        background: rgba(255, 255, 255, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #fff;
+        padding: 4px 11px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      /* Nav */
+      nav.toc {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: saturate(180%) blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+      nav.toc .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 18px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+      nav.toc a {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+      }
+      nav.toc a:hover {
+        color: var(--brand);
+        text-decoration: none;
+      }
+
+      /* Sections */
+      main {
+        padding: 8px 0 40px;
+      }
+      section {
+        padding: 34px 0 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      section:last-of-type {
+        border-bottom: 0;
+      }
+      h2 {
+        font-size: 22px;
+        margin: 0 0 6px;
+        letter-spacing: -0.01em;
+        scroll-margin-top: 64px;
+      }
+      h3 {
+        font-size: 16px;
+        margin: 22px 0 4px;
+      }
+      p,
+      ul,
+      ol {
+        color: #344563;
+      }
+      ul.clean {
+        list-style: none;
+        padding-left: 0;
+      }
+      ul.clean li {
+        padding-left: 26px;
+        position: relative;
+        margin: 8px 0;
+      }
+      ul.clean li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--brand);
+        font-weight: 700;
+      }
+      code {
+        background: var(--code-bg);
+        border-radius: 5px;
+        padding: 1px 6px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.9em;
+        color: var(--brand-deep);
+      }
+      .lead {
+        font-size: 18px;
+        color: var(--muted);
+      }
+      .note {
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-left: 4px solid var(--brand);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        margin: 18px 0;
+      }
+      .note strong {
+        color: var(--ink);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0;
+        font-size: 15px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        color: var(--muted);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin: 16px 0;
+      }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 16px;
+        background: #fff;
+      }
+      .card h3 {
+        margin-top: 0;
+      }
+
+      details {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 4px 16px;
+        margin: 10px 0;
+        background: #fff;
+      }
+      details summary {
+        cursor: pointer;
+        font-weight: 600;
+        padding: 10px 0;
+        color: var(--ink);
+      }
+      details[open] summary {
+        color: var(--brand);
+      }
+      details p {
+        margin-top: 0;
+      }
+
+      footer {
+        background: var(--bg-soft);
+        border-top: 1px solid var(--line);
+        padding: 28px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      footer .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <div class="brand">
+          <svg class="logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.4)" />
+            <g stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 16.3 L13.2 21.1 L23 9" />
+              <path d="M18.3 9.4 L23 9 L22.5 13.7" />
+            </g>
+          </svg>
+          <h1>Resurface</h1>
+        </div>
+        <p class="tag">
+          Retro and meeting action items become owned, due-dated Jira issues that resurface until
+          they're done — the accountability layer for your follow-through.
+        </p>
+        <div class="badges">
+          <span class="badge">Runs on Atlassian</span>
+          <span class="badge">No external data egress</span>
+          <span class="badge">Free for up to 10 users</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <div class="wrap">
+        <a href="#overview">Overview</a>
+        <a href="#start">Getting started</a>
+        <a href="#capture">Capture</a>
+        <a href="#status">Status &amp; sync</a>
+        <a href="#nudges">Nudges &amp; carryover</a>
+        <a href="#dashboards">Dashboards</a>
+        <a href="#metrics">Metrics</a>
+        <a href="#settings">Settings</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="wrap">
+      <section id="overview">
+        <h2>What Resurface does</h2>
+        <p class="lead">
+          Action items created in retros and meetings tend to die — no owner, no due date, no
+          follow-up. Resurface fixes that, without replacing your retro tool.
+        </p>
+        <p>
+          It turns any Jira issue into a tracked <strong>action item</strong> with an enforced owner
+          and deadline, then keeps it visible until it's done: overdue items resurface with a nudge,
+          a carry-over count tracks how often a task slips, and accountability dashboards show
+          closure rate and follow-through. Resurface is <strong>tool-agnostic</strong> — it rides
+          alongside any retrospective app rather than competing with it.
+        </p>
+      </section>
+
+      <section id="start">
+        <h2>Getting started</h2>
+        <p>
+          After a site admin installs Resurface from the Atlassian Marketplace, you'll find it in
+          four places:
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>Issue panel</h3>
+            <p>On any Jira issue (right-hand context panel) — capture and manage the action item.</p>
+          </div>
+          <div class="card">
+            <h3>Project page</h3>
+            <p><em>Apps → Action Items</em> — the dashboard for a single project.</p>
+          </div>
+          <div class="card">
+            <h3>Global page</h3>
+            <p><em>Action Items (All Projects)</em> — a cross-project view for team leads.</p>
+          </div>
+          <div class="card">
+            <h3>Project settings</h3>
+            <p><em>Project settings → Action Items Settings</em> — nudge cadence and definition of done.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="capture">
+        <h2>Capturing an action item</h2>
+        <p>Open the issue you want to track and use the <strong>Action Item</strong> panel:</p>
+        <ul class="clean">
+          <li><strong>Owner</strong> (required) — who is accountable. Pre-filled from the issue's current assignee.</li>
+          <li><strong>Due date</strong> (required) — the deadline. Pre-filled from the issue's due date if set.</li>
+          <li><strong>Source</strong> — retro, sprint, or manual, so items stay queryable.</li>
+          <li><strong>Source reference</strong> (optional) — e.g. "Sprint 42 retro".</li>
+        </ul>
+        <div class="note">
+          <strong>No ownerless, dateless items.</strong> Resurface requires an owner and a due date
+          at capture — that's the whole point. The issue is also tagged with the
+          <code>action-item</code> label so it's easy to find in Jira.
+        </div>
+      </section>
+
+      <section id="status">
+        <h2>Status &amp; two-way Jira sync</h2>
+        <p>
+          Once captured, the panel shows the item's status, owner, due date, source, age, and
+          carry-over count. From there:
+        </p>
+        <ul class="clean">
+          <li><strong>Mark as Done / Reopen</strong> updates the action item and best-effort transitions the linked Jira issue.</li>
+          <li>When you transition the issue in Jira to a <strong>Done</strong>-category status, the action item follows automatically — and back to open if you reopen it.</li>
+        </ul>
+        <div class="note">
+          Jira workflows are configurable, so if a project's workflow has no transition into a
+          Done-category status, Resurface still records the change on its side and tells you the
+          Jira status couldn't be moved automatically.
+        </div>
+      </section>
+
+      <section id="nudges">
+        <h2>Nudges &amp; carryover</h2>
+        <p>
+          A daily job checks for <strong>open, overdue</strong> items. For each one — respecting the
+          project's nudge cadence — Resurface posts a comment on the issue, which Jira delivers to
+          the owner through its native notifications. No external messaging, no data leaves
+          Atlassian.
+        </p>
+        <ul class="clean">
+          <li>Each nudge bumps the item's <strong>carry-over count</strong> — a visible measure of how often a task has slipped.</li>
+          <li>Cadence is <strong>daily</strong>, <strong>weekly</strong>, or <strong>off</strong> per project (see Settings).</li>
+          <li>A "<strong>Carried over only</strong>" filter on the dashboard lists everything still open before your next retro.</li>
+        </ul>
+      </section>
+
+      <section id="dashboards">
+        <h2>Dashboards</h2>
+        <p>
+          The <strong>project</strong> and <strong>global</strong> pages list every action item by
+          issue, owner, due date, age, status, and source. Overdue rows are highlighted and the list
+          is sorted oldest-first, so the most-slipped items rise to the top.
+        </p>
+        <h3>Filters</h3>
+        <p>Narrow the view by status, source, owner, overdue-only, or carried-over-only.</p>
+        <div class="note">
+          <strong>Permission-aware.</strong> The global page only ever shows items from issues you're
+          allowed to see in Jira — it never leaks cross-project data.
+        </div>
+      </section>
+
+      <section id="metrics">
+        <h2>Accountability metrics</h2>
+        <p>Each dashboard shows the metrics a team lead actually cares about:</p>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Closure rate</td><td>Share of action items marked done.</td></tr>
+            <tr><td>Average age</td><td>Mean days items have been open (or open-to-close for done items).</td></tr>
+            <tr><td>Overdue count</td><td>Open items past their due date.</td></tr>
+            <tr><td>% carried over</td><td>Share of items that have slipped at least once.</td></tr>
+            <tr><td>Repeat slippage by owner</td><td>Who keeps carrying items over — for coaching, not blame.</td></tr>
+          </tbody>
+        </table>
+        <p>
+          Project metrics are recomputed and cached by the daily job; a fresh project shows
+          live-computed numbers until the first run.
+        </p>
+      </section>
+
+      <section id="settings">
+        <h2>Settings</h2>
+        <p>From <em>Project settings → Action Items Settings</em> a project admin can configure:</p>
+        <ul class="clean">
+          <li><strong>Nudge cadence</strong> — daily, weekly, or off. Changes take effect on the next daily run.</li>
+          <li><strong>Definition of done</strong> — included in each nudge so owners know what "done" means (up to 500 characters).</li>
+        </ul>
+      </section>
+
+      <section id="privacy">
+        <h2>Privacy &amp; permissions</h2>
+        <p>
+          Resurface is built on Atlassian Forge and runs entirely inside Atlassian Cloud. It makes
+          <strong>no requests to any external server</strong> and stores only a small accountability
+          layer (owner account ID, due date, status, source, timestamps, carry-over count, and
+          per-project settings). It does not store issue summaries, comment text, names, or emails.
+        </p>
+        <table>
+          <thead>
+            <tr><th>Scope</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>read:jira-work</td><td>Read issues/projects to display and index action items.</td></tr>
+            <tr><td>write:jira-work</td><td>Add the label/property, post nudge comments, transition issues.</td></tr>
+            <tr><td>read:jira-user</td><td>Resolve the owner/assignee so the app can display and notify them.</td></tr>
+            <tr><td>storage:app</td><td>Persist the accountability layer in Forge storage.</td></tr>
+          </tbody>
+        </table>
+        <p>
+          See the full <a href="https://outpostlabs.dev/resurface/privacy">Privacy Policy</a> and
+          <a href="https://outpostlabs.dev/resurface/terms">Terms of Service</a>.
+        </p>
+      </section>
+
+      <section id="faq">
+        <h2>FAQ</h2>
+
+        <details>
+          <summary>Does Resurface replace my retro tool?</summary>
+          <p>
+            No. It's tool-agnostic and works alongside any retrospective app. Resurface is the
+            follow-through layer — it makes the action items from your retro persistent and
+            accountable, wherever they came from.
+          </p>
+        </details>
+
+        <details>
+          <summary>What does "age" mean?</summary>
+          <p>
+            Age is measured from when the item was captured in Resurface (not the Jira issue's
+            creation date) to now, or to when it was closed.
+          </p>
+        </details>
+
+        <details>
+          <summary>I marked an item done but the Jira issue didn't move — why?</summary>
+          <p>
+            Resurface transitions the issue to a Done-category status when one is available in the
+            project's workflow. If the current status has no such transition, the action item is
+            still marked done and the panel notes that the Jira status couldn't be changed
+            automatically.
+          </p>
+        </details>
+
+        <details>
+          <summary>How often are owners nudged, and can I turn it off?</summary>
+          <p>
+            Overdue items are nudged on the daily job at the project's cadence — daily or weekly — and
+            never more than once per cycle. Set the cadence to <strong>off</strong> in project
+            settings to stop nudges entirely.
+          </p>
+        </details>
+
+        <details>
+          <summary>Who can see the global "All Projects" page?</summary>
+          <p>
+            Anyone can open it, but it only shows action items from issues that user is permitted to
+            view in Jira. It never exposes items from projects they can't access.
+          </p>
+        </details>
+
+        <details>
+          <summary>Where is my data stored, and does anything leave Atlassian?</summary>
+          <p>
+            Everything runs on Atlassian Forge and is stored in Forge storage within Atlassian Cloud.
+            Resurface makes no external network calls — your data never leaves Atlassian.
+          </p>
+        </details>
+
+        <details>
+          <summary>What does it cost?</summary>
+          <p>
+            Free for sites of up to 10 users, with paid tiers above that. Billing is handled entirely
+            by the Atlassian Marketplace.
+          </p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <p>
+          Questions, bugs, or feedback? Email
+          <a href="mailto:support@outpostlabs.dev">support@outpostlabs.dev</a>. We provide
+          best-effort, asynchronous support. You can also ask and browse questions on the Atlassian
+          Community.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="links">
+          <a href="https://outpostlabs.dev">Outpost Labs</a>
+          <a href="https://outpostlabs.dev/resurface/privacy">Privacy Policy</a>
+          <a href="https://outpostlabs.dev/resurface/terms">Terms of Service</a>
+          <a href="mailto:support@outpostlabs.dev">Support</a>
+        </div>
+        <div>© <span id="yr"></span> Outpost Labs · Resurface — Retro Action Item Tracker &amp; Accountability for Jira</div>
+      </div>
+    </footer>
+    <script>
+      document.getElementById("yr").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
