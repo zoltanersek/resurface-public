@@ -1,0 +1,18 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Resurface icon">
+  <!-- navy rounded tile (works as favicon / avatar on any background) -->
+  <rect x="0" y="0" width="128" height="128" rx="28" fill="#0E1726"/>
+
+  <!-- Resurface beacon mark: an item resurfacing upward -->
+  <g stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke-width="9.2">
+      <path d="M24 80 L46 80"/>
+      <path d="M82 80 L104 80"/>
+      <path d="M46 80 L39.2 71.2"/>
+      <path d="M82 80 L88.8 71.2"/>
+    </g>
+    <g stroke-width="10.8">
+      <path d="M64 100 L64 38"/>
+      <path d="M46.4 56 L64 38 L81.6 56"/>
+    </g>
+  </g>
+</svg>
