@@ -1,6 +1,7 @@
 ---
-layout: default
-title: Terms of Service — Resurface
+layout: ../../layouts/LegalLayout.astro
+title: Terms of Service — Resurface | OutpostLabs
+description: The end-user agreement governing use of Resurface — the retro action item tracker for Jira, distributed through the Atlassian Marketplace.
 ---
 
 # Terms of Service (End User Agreement) — Resurface

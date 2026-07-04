@@ -1,0 +1,101 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<BaseLayout
+  title="Blog | OutpostLabs"
+  description="Notes, product updates, and Jira tips from the OutpostLabs team — makers of Resurface."
+>
+  <header class="page-head">
+    <h1>Blog</h1>
+    <p>Notes, product updates, and Jira tips from the team.</p>
+  </header>
+
+  {
+    posts.length === 0 ? (
+      <p class="empty">No posts yet — check back soon.</p>
+    ) : (
+      <ul class="post-list">
+        {posts.map((post) => (
+          <li>
+            <a href={`/blog/${post.id}/`} class="post-link">
+              <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
+              <span class="post-title">{post.data.title}</span>
+              <span class="post-desc">{post.data.description}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <style>
+    .page-head {
+      margin-bottom: 40px;
+    }
+    .page-head h1 {
+      font-size: 40px;
+      letter-spacing: -1px;
+      margin: 0 0 8px;
+    }
+    .page-head p {
+      font-size: 19px;
+      color: var(--slate);
+      margin: 0;
+    }
+    .empty {
+      color: var(--slate);
+    }
+    .post-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .post-list li {
+      border-top: 1px solid var(--line);
+    }
+    .post-list li:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+    .post-link {
+      display: block;
+      padding: 22px 0;
+      color: inherit;
+    }
+    .post-link:hover {
+      text-decoration: none;
+    }
+    .post-link time {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--amber2);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 6px;
+    }
+    .post-title {
+      display: block;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 4px;
+    }
+    .post-link:hover .post-title {
+      color: var(--amber2);
+    }
+    .post-desc {
+      display: block;
+      color: var(--slate);
+      font-size: 15.5px;
+    }
+  </style>
+</BaseLayout>

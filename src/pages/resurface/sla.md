@@ -1,3 +1,9 @@
+---
+layout: ../../layouts/LegalLayout.astro
+title: Service Level Agreement (SLA) — Resurface | OutpostLabs
+description: Support commitments and target response times for Resurface — the retro action item tracker for Jira, distributed through the Atlassian Marketplace.
+---
+
 # Service Level Agreement (SLA) — Resurface
 
 **Last updated: [DATE — e.g. 23 June 2026]**

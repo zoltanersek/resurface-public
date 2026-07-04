@@ -1,3 +1,10 @@
+---
+// Resurface documentation. Ported into an Astro route so /resurface/docs/ resolves in
+// dev, preview, and production alike (a raw public/ file only resolves the directory
+// index in the built output, not `astro dev`). Restyled to share the Resurface site
+// chrome and palette (navy header, amber accents) — same content, consistent look.
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,18 +15,21 @@
       name="description"
       content="Documentation for Resurface: turn retro and meeting action items into owned, due-dated Jira issues that resurface until they're done. Capture, nudges, carryover, dashboards, and accountability metrics."
     />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C5BD6'/%3E%3Cg stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 20 L11.5 20'/%3E%3Cpath d='M20.5 20 L26 20'/%3E%3Cpath d='M11.5 20 L9.8 17.8'/%3E%3Cpath d='M20.5 20 L22.2 17.8'/%3E%3Cpath d='M16 25 L16 9.5'/%3E%3Cpath d='M11.6 14 L16 9.5 L20.4 14'/%3E%3C/g%3E%3C/svg%3E" />
-    <style>
+    <meta name="theme-color" content="#0E1726" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style is:global>
       :root {
-        --brand-top: #4c9aff;
-        --brand: #0c5bd6;
-        --brand-deep: #09367e;
-        --ink: #172b4d;
-        --muted: #5e6c84;
-        --line: #dfe1e6;
-        --bg: #ffffff;
-        --bg-soft: #f4f5f7;
-        --code-bg: #f1f4f9;
+        --navy: #0e1726;
+        --navy2: #132038;
+        --ink: #101b2e;
+        --slate: #5a6b85;
+        --paper: #f7f9fc;
+        --line: #e7ecf3;
+        --amber1: #ffc24b;
+        --amber2: #ff7a2f;
+        --amber: #ff7a2f;
+        --white: #ffffff;
+        --muted: #a9b8ce;
         --radius: 12px;
         --maxw: 880px;
       }
@@ -32,13 +42,13 @@
       body {
         margin: 0;
         color: var(--ink);
-        background: var(--bg);
-        font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-          sans-serif;
+        background: var(--white);
+        font: 16px/1.65 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+          Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
       }
       a {
-        color: var(--brand);
+        color: var(--amber2);
         text-decoration: none;
       }
       a:hover {
@@ -47,26 +57,100 @@
       .wrap {
         max-width: var(--maxw);
         margin: 0 auto;
-        padding: 0 20px;
+        padding: 0 24px;
       }
 
-      /* Header */
+      /* site header (matches Resurface landing) */
+      header.site {
+        background: var(--navy);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid #1c2942;
+      }
+      header.site .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 66px;
+      }
+      header.site .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 19px;
+      }
+      header.site .brand:hover {
+        text-decoration: none;
+      }
+      header.site .brand .logo {
+        width: 38px;
+        height: 38px;
+        flex: none;
+      }
+      header.site .brand small {
+        display: block;
+        font-weight: 500;
+        font-size: 11px;
+        color: #8da0bc;
+        letter-spacing: 0.2px;
+        margin-top: -2px;
+      }
+      header.site .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      header.site .nav-right .navlink {
+        color: #c8d5e6;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      header.site .nav-right .navlink:hover {
+        color: #fff;
+      }
+      .btn {
+        display: inline-block;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-size: 14px;
+        transition: transform 0.06s ease, box-shadow 0.2s ease;
+      }
+      .btn:hover {
+        text-decoration: none;
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--amber1), var(--amber2));
+        color: #2a1400;
+        box-shadow: 0 8px 22px rgba(255, 122, 47, 0.28);
+      }
+
+      /* hero */
       header.hero {
-        background: linear-gradient(160deg, var(--brand-top), var(--brand-deep));
+        background: radial-gradient(1100px 500px at 80% -10%, #1b2c4b 0%, var(--navy) 55%);
         color: #fff;
         padding: 56px 0 48px;
       }
-      .brand {
+      header.hero .brand {
         display: flex;
         align-items: center;
         gap: 14px;
       }
-      .brand .logo {
+      header.hero .brand .logo {
         width: 48px;
         height: 48px;
         flex: none;
       }
-      .brand h1 {
+      header.hero .brand h1 {
         margin: 0;
         font-size: 26px;
         letter-spacing: -0.01em;
@@ -75,7 +159,7 @@
         margin: 18px 0 0;
         font-size: 19px;
         max-width: 620px;
-        color: rgba(255, 255, 255, 0.92);
+        color: var(--muted);
       }
       header.hero .badges {
         margin-top: 22px;
@@ -84,19 +168,22 @@
         gap: 8px;
       }
       .badge {
-        background: rgba(255, 255, 255, 0.16);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        color: #fff;
-        padding: 4px 11px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #16233a;
+        border: 1px solid #2a3a57;
+        color: #d7e1ef;
+        padding: 6px 13px;
         border-radius: 999px;
         font-size: 13px;
         font-weight: 600;
       }
 
-      /* Nav */
+      /* toc nav */
       nav.toc {
         position: sticky;
-        top: 0;
+        top: 66px;
         z-index: 10;
         background: rgba(255, 255, 255, 0.92);
         backdrop-filter: saturate(180%) blur(8px);
@@ -110,16 +197,16 @@
         padding-bottom: 12px;
       }
       nav.toc a {
-        color: var(--muted);
+        color: var(--slate);
         font-size: 14px;
         font-weight: 600;
       }
       nav.toc a:hover {
-        color: var(--brand);
+        color: var(--amber);
         text-decoration: none;
       }
 
-      /* Sections */
+      /* sections */
       main {
         padding: 8px 0 40px;
       }
@@ -134,7 +221,7 @@
         font-size: 22px;
         margin: 0 0 6px;
         letter-spacing: -0.01em;
-        scroll-margin-top: 64px;
+        scroll-margin-top: 130px;
       }
       h3 {
         font-size: 16px;
@@ -155,29 +242,30 @@
         margin: 8px 0;
       }
       ul.clean li::before {
-        content: "✓";
+        content: '✓';
         position: absolute;
         left: 0;
         top: 0;
-        color: var(--brand);
+        color: var(--amber2);
         font-weight: 700;
       }
       code {
-        background: var(--code-bg);
+        background: var(--paper);
+        border: 1px solid var(--line);
         border-radius: 5px;
         padding: 1px 6px;
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
         font-size: 0.9em;
-        color: var(--brand-deep);
+        color: var(--amber2);
       }
       .lead {
         font-size: 18px;
-        color: var(--muted);
+        color: var(--slate);
       }
       .note {
-        background: var(--bg-soft);
+        background: var(--paper);
         border: 1px solid var(--line);
-        border-left: 4px solid var(--brand);
+        border-left: 4px solid var(--amber);
         border-radius: var(--radius);
         padding: 14px 16px;
         margin: 18px 0;
@@ -200,7 +288,7 @@
         vertical-align: top;
       }
       th {
-        color: var(--muted);
+        color: var(--slate);
         font-size: 13px;
         text-transform: uppercase;
         letter-spacing: 0.04em;
@@ -236,28 +324,76 @@
         color: var(--ink);
       }
       details[open] summary {
-        color: var(--brand);
+        color: var(--amber);
       }
       details p {
         margin-top: 0;
       }
 
-      footer {
-        background: var(--bg-soft);
-        border-top: 1px solid var(--line);
-        padding: 28px 0;
-        color: var(--muted);
+      footer.site {
+        background: var(--navy);
+        color: #9fb0c8;
+        padding: 44px 0;
         font-size: 14px;
       }
-      footer .links {
+      footer.site .foot {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
         flex-wrap: wrap;
         gap: 16px;
-        margin-bottom: 10px;
+      }
+      footer.site .foot a {
+        color: #c8d5e6;
+        text-decoration: none;
+        margin-left: 20px;
+      }
+      footer.site .foot .links a:first-child {
+        margin-left: 0;
+      }
+      footer.site .foot a:hover {
+        color: #fff;
+      }
+
+      @media (max-width: 560px) {
+        header.site .nav-right .navlink {
+          display: none;
+        }
+        footer.site .foot a {
+          margin-left: 0;
+          margin-right: 18px;
+        }
       }
     </style>
   </head>
   <body>
+    <header class="site">
+      <div class="wrap nav">
+        <a class="brand" href="/resurface/" aria-label="Resurface home">
+          <svg class="logo" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="rgba(255,255,255,0.16)" stroke="rgba(255,255,255,0.4)" />
+            <g stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <g stroke-width="2.3">
+                <path d="M6 20 L11.5 20" />
+                <path d="M20.5 20 L26 20" />
+                <path d="M11.5 20 L9.8 17.8" />
+                <path d="M20.5 20 L22.2 17.8" />
+              </g>
+              <g stroke-width="2.7">
+                <path d="M16 25 L16 9.5" />
+                <path d="M11.6 14 L16 9.5 L20.4 14" />
+              </g>
+            </g>
+          </svg>
+          <span>Resurface<small>by OutpostLabs.dev</small></span>
+        </a>
+        <div class="nav-right">
+          <a class="navlink" href="/">Home</a>
+          <a class="btn btn-primary" href="https://marketplace.atlassian.com/apps/3449871240/resurface-retro-action-item-tracker-accountability">Install free</a>
+        </div>
+      </div>
+    </header>
+
     <header class="hero">
       <div class="wrap">
         <div class="brand">
@@ -276,7 +412,7 @@
               </g>
             </g>
           </svg>
-          <h1>Resurface</h1>
+          <h1>Resurface Docs</h1>
         </div>
         <p class="tag">
           Retro and meeting action items become owned, due-dated Jira issues that resurface until
@@ -461,8 +597,8 @@
           </tbody>
         </table>
         <p>
-          See the full <a href="https://outpostlabs.dev/resurface/privacy">Privacy Policy</a> and
-          <a href="https://outpostlabs.dev/resurface/terms">Terms of Service</a>.
+          See the full <a href="/resurface/privacy/">Privacy Policy</a> and
+          <a href="/resurface/terms/">Terms of Service</a>.
         </p>
       </section>
 
@@ -541,19 +677,21 @@
       </section>
     </main>
 
-    <footer>
-      <div class="wrap">
+    <footer class="site">
+      <div class="wrap foot">
+        <div>© <span id="yr"></span> OutpostLabs.dev — small, focused apps that do one thing well.</div>
         <div class="links">
-          <a href="https://outpostlabs.dev">Outpost Labs</a>
-          <a href="https://outpostlabs.dev/resurface/privacy">Privacy Policy</a>
-          <a href="https://outpostlabs.dev/resurface/terms">Terms of Service</a>
-          <a href="mailto:support@outpostlabs.dev">Support</a>
+          <a href="/">OutpostLabs</a>
+          <a href="https://marketplace.atlassian.com/apps/3449871240/resurface-retro-action-item-tracker-accountability">Marketplace</a>
+          <a href="/resurface/">Resurface</a>
+          <a href="/resurface/privacy/">Privacy</a>
+          <a href="/resurface/terms/">Terms</a>
+          <a href="/resurface/sla/">SLA</a>
         </div>
-        <div>© <span id="yr"></span> Outpost Labs · Resurface — Retro Action Item Tracker &amp; Accountability for Jira</div>
       </div>
     </footer>
-    <script>
-      document.getElementById("yr").textContent = new Date().getFullYear();
+    <script is:inline>
+      document.getElementById('yr').textContent = new Date().getFullYear();
     </script>
   </body>
 </html>

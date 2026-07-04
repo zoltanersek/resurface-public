@@ -1,0 +1,145 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, author } = post.data;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+const published = pubDate.toISOString();
+const modified = (updatedDate ?? pubDate).toISOString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: published,
+  dateModified: modified,
+  author: { '@type': 'Organization', name: author, url: 'https://outpostlabs.dev' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'OutpostLabs',
+    url: 'https://outpostlabs.dev',
+    logo: { '@type': 'ImageObject', url: 'https://outpostlabs.dev/favicon.svg' },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL },
+  url: canonicalURL,
+};
+---
+
+<BaseLayout
+  title={`${title} | OutpostLabs Blog`}
+  description={description}
+  ogType="article"
+  publishedTime={published}
+  modifiedTime={modified}
+>
+  <article class="prose">
+    <p class="back"><a href="/blog">← All posts</a></p>
+    <header class="post-header">
+      <h1>{title}</h1>
+      <p class="meta">
+        <time datetime={pubDate.toISOString()}>{fmt(pubDate)}</time>
+        <span> · {author}</span>
+        {updatedDate && <span class="updated"> · updated {fmt(updatedDate)}</span>}
+      </p>
+    </header>
+    <slot />
+  </article>
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+
+  <style>
+    .prose {
+      color: var(--ink);
+    }
+    .back {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .post-header {
+      margin-bottom: 32px;
+    }
+    .post-header h1 {
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: -0.6px;
+      margin: 0 0 10px;
+    }
+    .meta {
+      color: var(--slate);
+      font-size: 14px;
+      margin: 0;
+    }
+  </style>
+
+  <style is:global>
+    .prose h2 {
+      font-size: 24px;
+      margin: 40px 0 12px;
+      letter-spacing: -0.3px;
+    }
+    .prose h3 {
+      font-size: 19px;
+      margin: 30px 0 10px;
+    }
+    .prose p,
+    .prose li {
+      font-size: 17px;
+    }
+    .prose ul,
+    .prose ol {
+      padding-left: 1.3rem;
+    }
+    .prose li {
+      margin-bottom: 6px;
+    }
+    .prose a {
+      color: var(--amber2);
+    }
+    .prose img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+    .prose blockquote {
+      margin: 22px 0;
+      padding: 12px 20px;
+      background: var(--paper);
+      border-left: 4px solid var(--amber);
+      border-radius: 0 10px 10px 0;
+      color: var(--slate);
+    }
+    .prose pre {
+      background: var(--navy);
+      color: #e8eef5;
+      padding: 16px 18px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+    .prose code {
+      font-size: 0.92em;
+    }
+    .prose :not(pre) > code {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 1px 6px;
+    }
+    .prose hr {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 40px 0;
+    }
+  </style>
+</BaseLayout>

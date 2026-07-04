@@ -1,6 +1,7 @@
 ---
-layout: default
-title: Privacy Policy — Resurface
+layout: ../../layouts/LegalLayout.astro
+title: Privacy Policy — Resurface | OutpostLabs
+description: How OutpostLabs handles data for Resurface — the retro action item tracker for Jira. Runs on Atlassian Forge; no data leaves Atlassian Cloud.
 ---
 
 # Privacy Policy — Resurface
@@ -103,7 +104,7 @@ in-scope stored data follows Atlassian's data residency capabilities for Forge.
 - The Jira artifacts written by the App (labels, properties, comments, transitions) remain in
   your Jira instance and are managed by you, as with any other Jira content.
 - To request access to, correction of, or deletion of personal data, contact
-  privacy@outpostlabs.dev, or have your Atlassian site administrator make the request. Because
+  support@outpostlabs.dev, or have your Atlassian site administrator make the request. Because
   we act as a processor, we may direct such requests to the controlling customer.
 
 ## 10. Your rights

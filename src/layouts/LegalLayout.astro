@@ -1,0 +1,105 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+// Markdown pages (src/pages/resurface/*.md) render through this layout and pass their
+// YAML front matter as `frontmatter`.
+export interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <article class="prose">
+    <p class="back"><a href="/resurface/">← Back to Resurface</a></p>
+    <slot />
+  </article>
+
+  <style is:global>
+    .prose {
+      color: var(--ink);
+    }
+    .prose .back {
+      margin-bottom: 28px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .prose h1 {
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: -0.6px;
+      margin: 0 0 18px;
+    }
+    .prose h2 {
+      font-size: 22px;
+      margin: 40px 0 12px;
+      letter-spacing: -0.3px;
+    }
+    .prose h3 {
+      font-size: 18px;
+      margin: 28px 0 10px;
+    }
+    .prose p,
+    .prose li {
+      font-size: 16px;
+    }
+    .prose ul,
+    .prose ol {
+      padding-left: 1.3rem;
+    }
+    .prose li {
+      margin-bottom: 6px;
+    }
+    .prose a {
+      color: var(--amber2);
+    }
+    .prose blockquote {
+      margin: 22px 0;
+      padding: 14px 20px;
+      background: var(--paper);
+      border-left: 4px solid var(--amber);
+      border-radius: 0 10px 10px 0;
+      color: var(--slate);
+    }
+    .prose blockquote p {
+      margin: 0.4em 0;
+    }
+    .prose code {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-size: 0.9em;
+    }
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 15px;
+      display: block;
+      overflow-x: auto;
+    }
+    .prose th,
+    .prose td {
+      border: 1px solid var(--line);
+      padding: 9px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .prose th {
+      background: var(--paper);
+    }
+    .prose hr {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 40px 0;
+    }
+    .prose em {
+      color: var(--slate);
+    }
+  </style>
+</BaseLayout>
