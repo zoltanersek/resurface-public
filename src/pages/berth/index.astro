@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const repo = 'https://github.com/zoltanersek/berth';
+
+const whys = [
+  {
+    h: 'Not an agent runner',
+    p: 'It\'s the environment layer <em>underneath</em> whatever agents you already run. Keep your workflow — Berth just isolates it.',
+  },
+  {
+    h: 'Zero shared state',
+    p: 'Each berth gets its own DB, cache, and volumes. Agents can\'t corrupt each other\'s data or trip over half-migrated schemas.',
+  },
+  {
+    h: 'Local-first, single binary',
+    p: 'No daemon to babysit, no cloud account, no bill. Build it from source and it just works on your own projects.',
+  },
+  {
+    h: 'Free & open source',
+    p: 'MIT licensed. Fork it, read it, send a PR. This is a tool we build for ourselves, in the open.',
+  },
+];
+---
+
+<BaseLayout
+  wide
+  title="Berth — Isolated dev environments for parallel AI coding agents | OutpostLabs"
+  description="Berth gives every AI coding agent its own isolated dev environment — its own git worktree, auto-assigned non-colliding ports, and isolated state. One command up, one command down. Free, open source, single binary for macOS & Linux."
+  canonical="/berth/"
+  ogType="website"
+>
+  <!-- Structured data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Berth — Isolated dev environments for parallel AI coding agents',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'macOS, Linux',
+    description:
+      'Give every AI coding agent its own isolated dev environment: an isolated git worktree, auto-assigned non-colliding ports, and isolated state. One command up, one command down.',
+    url: 'https://outpostlabs.dev/berth/',
+    downloadUrl: 'https://github.com/zoltanersek/berth',
+    license: 'https://opensource.org/licenses/MIT',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    publisher: { '@type': 'Organization', name: 'OutpostLabs', url: 'https://outpostlabs.dev' },
+  })} />
+
+  <!-- HERO -->
+  <section class="b-hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Open-source dev tool</p>
+        <h1>Give every agent<br /><span class="amber">its own berth.</span></h1>
+        <p class="lede">
+          Running 5, 10, 50 AI coding agents in parallel on git worktrees? They collide — same
+          ports, same database, same cache. Berth gives each agent its own isolated dev
+          environment. One command up, one command down.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={repo}>Star on GitHub ★</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+        <div class="chips">
+          <span class="chip"><span class="dot"></span>Free &amp; open source (MIT)</span>
+          <span class="chip">Single binary</span>
+          <span class="chip">macOS &amp; Linux</span>
+        </div>
+      </div>
+
+      <!-- terminal mock -->
+      <div class="term" role="img" aria-label="Terminal showing 'berth up agent-1' creating an isolated worktree and assigning free ports, then 'berth ls' listing two running berths on different ports.">
+        <div class="term-bar"><span class="td td-r"></span><span class="td td-y"></span><span class="td td-g"></span><span class="term-title">berth</span></div>
+        <pre class="term-body"><span class="c-prompt">$</span> <span class="c-cmd">berth up agent-1</span>
+
+Worktree:
+  ../myapp-agent-1
+
+Ports:
+  <span class="c-key">BACKEND_PORT</span>         <span class="c-num">60291</span>
+  <span class="c-key">FRONTEND_PORT</span>        <span class="c-num">60292</span>
+
+URLs:
+  <span class="c-url">http://localhost:60291</span>
+  <span class="c-url">http://localhost:60292</span>
+
+<span class="c-ok">✓</span> Berth 'agent-1' is running.
+
+<span class="c-prompt">$</span> <span class="c-cmd">berth ls</span>
+NAME      BRANCH    STATUS   AGE  PORTS
+agent-1   agent-1   <span class="c-ok">running</span>  2m   60291,60292
+agent-2   agent-2   <span class="c-ok">running</span>  40s  60486,60487</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="b-section">
+    <div class="wrap section-head">
+      <p class="eyebrow">The problem</p>
+      <h2>50 agents. One set of ports.</h2>
+      <p>
+        The new normal is a swarm of coding agents — Claude Code, Codex, Cursor, Aider — each on
+        its own worktree, each trying to boot the same dev stack. They fight over ports, share one
+        database, and step on each other's state. So you babysit `.env` files and tmux tabs instead
+        of shipping. Berth makes each environment disposable and isolated, so the agents never
+        collide.
+      </p>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how" class="b-section alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Up. Isolated. Down.</h2>
+        <p>A single binary on top of the tools you already use — <code>git worktree</code> and Docker Compose.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="ic">🌱</div>
+          <h3>Isolated worktree &amp; env</h3>
+          <p><code>berth up &lt;name&gt;</code> creates a fresh branch-per-agent worktree and boots its dev services in their own Compose project — network, volumes, and DB namespaced per berth.</p>
+        </div>
+        <div class="step">
+          <div class="ic">🔌</div>
+          <h3>Auto, non-colliding ports</h3>
+          <p>Berth finds free ports, injects them as env vars, and prints the URLs. No more <code>address already in use</code> when the tenth agent wakes up.</p>
+        </div>
+        <div class="step">
+          <div class="ic">🧹</div>
+          <h3>One command down</h3>
+          <p><code>berth down &lt;name&gt;</code> tears down services and volumes and removes the worktree. Abandoned an agent? <code>--force</code> discards it cleanly. <code>berth ls</code> shows what's running where.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="b-section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Why devs pick it</p>
+        <h2>Thin, tool-agnostic, out of your way</h2>
+      </div>
+      <div class="why">
+        {whys.map((w) => (
+          <div class="row">
+            <svg class="check" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div><h4>{w.h}</h4><p set:html={w.p} /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section class="b-section alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Get started</p>
+        <h2>Install &amp; run</h2>
+        <p>Requires <code>git</code> and Docker with the Compose plugin.</p>
+      </div>
+      <div class="install">
+        <pre class="code"><span class="c-comment"># build from source</span>
+<span class="c-prompt">$</span> git clone {repo.replace('https://', '')}
+<span class="c-prompt">$</span> cd berth &amp;&amp; cargo install --path .
+
+<span class="c-comment"># in any repo with a berth.yml</span>
+<span class="c-prompt">$</span> berth up agent-1
+<span class="c-prompt">$</span> berth ls
+<span class="c-prompt">$</span> berth down agent-1</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="band-wrap">
+    <div class="band">
+      <h2>Stop letting your agents collide.</h2>
+      <p>Berth is free and open source. Star it, try it, tell us what breaks.</p>
+      <a class="btn btn-primary" href={repo}>View Berth on GitHub</a>
+    </div>
+  </section>
+
+  <style>
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--amber); margin: 0 0 14px; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; background: rgba(255, 122, 47, 0.1); color: #b1490f; padding: 1px 6px; border-radius: 5px; }
+    .btn { display: inline-block; font-weight: 700; text-decoration: none; border-radius: 12px; padding: 14px 24px; font-size: 15px; transition: transform 0.06s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+    .btn:hover { text-decoration: none; }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: linear-gradient(135deg, var(--amber1), var(--amber2)); color: #2a1400; box-shadow: 0 8px 22px rgba(255, 122, 47, 0.28); }
+    .btn-ghost { border: 1.5px solid rgba(255, 255, 255, 0.28); color: #fff; }
+    .btn-ghost:hover { border-color: rgba(255, 255, 255, 0.6); }
+
+    /* hero */
+    .b-hero { background: radial-gradient(1100px 500px at 80% -10%, #1b2c4b 0%, var(--navy) 55%); color: #fff; padding: 80px 0 88px; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 48px; align-items: center; }
+    .b-hero h1 { font-size: 52px; line-height: 1.06; letter-spacing: -1.5px; margin: 0 0 18px; font-weight: 800; }
+    .b-hero h1 .amber { background: linear-gradient(135deg, var(--amber1), var(--amber2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lede { font-size: 19px; color: var(--muted); max-width: 540px; margin: 0 0 28px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 26px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #d7e1ef; background: #16233a; border: 1px solid #2a3a57; border-radius: 20px; padding: 7px 14px; }
+    .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--amber1), var(--amber2)); }
+
+    /* terminal */
+    .term { background: #0b1220; border: 1px solid #22314c; border-radius: 14px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); overflow: hidden; }
+    .term-bar { display: flex; align-items: center; gap: 8px; padding: 11px 14px; background: #111a2c; border-bottom: 1px solid #22314c; }
+    .td { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .td-r { background: #ff5f57; } .td-y { background: #febc2e; } .td-g { background: #28c840; }
+    .term-title { margin-left: 8px; color: #6b7c99; font-size: 12.5px; font-weight: 600; }
+    .term-body { margin: 0; padding: 18px 18px 20px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.7px; line-height: 1.62; color: #c7d3e6; overflow-x: auto; }
+    .c-prompt { color: #5c6f8f; } .c-cmd { color: #fff; font-weight: 600; }
+    .c-key { color: #ffc24b; } .c-num { color: #7ee0a2; } .c-url { color: #6db6ff; }
+    .c-ok { color: #28c840; } .c-comment { color: #5c6f8f; }
+
+    /* sections */
+    .b-section { padding: 76px 0; }
+    .alt { background: var(--paper); }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 46px; }
+    .section-head h2 { font-size: 34px; letter-spacing: -0.8px; margin: 6px 0 12px; }
+    .section-head p { color: var(--slate); font-size: 18px; margin: 0; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .step { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+    .step .ic { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: linear-gradient(135deg, #fff2e0, #ffe3cc); margin-bottom: 16px; }
+    .step h3 { font-size: 19px; margin: 0 0 8px; }
+    .step p { color: var(--slate); margin: 0; font-size: 15.5px; }
+    .step code { font-size: 0.85em; }
+
+    .why { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 40px; max-width: 900px; margin: 0 auto; }
+    .why .row { display: flex; gap: 13px; align-items: flex-start; }
+    .why .check { color: #22c55e; flex: none; margin-top: 2px; }
+    .why h4 { margin: 0 0 3px; font-size: 16.5px; }
+    .why p { margin: 0; color: var(--slate); font-size: 15px; }
+    .why em { color: var(--ink); font-style: italic; }
+
+    .install, .code { max-width: 760px; margin: 0 auto; }
+    .code { background: #0b1220; border: 1px solid #22314c; border-radius: 14px; padding: 22px 24px; color: #c7d3e6; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.7; overflow-x: auto; }
+
+    /* cta band */
+    .band-wrap { padding: 20px 0 84px; }
+    .band { max-width: 1032px; margin: 0 auto; background: var(--navy); color: #fff; text-align: center; border-radius: 24px; padding: 56px 28px; }
+    .band h2 { font-size: 32px; letter-spacing: -0.6px; margin: 0 0 10px; }
+    .band p { color: var(--muted); margin: 0 0 26px; font-size: 17px; }
+
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+      .b-hero h1 { font-size: 40px; }
+      .steps { grid-template-columns: 1fr; }
+      .why { grid-template-columns: 1fr; }
+      .section-head h2 { font-size: 28px; }
+    }
+  </style>
+</BaseLayout>
