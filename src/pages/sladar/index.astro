@@ -1,0 +1,244 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Kit (ConvertKit) form endpoint — same OutpostLabs list Resurface uses.
+const kitAction = 'https://app.kit.com/forms/9637468/subscriptions';
+
+const whys = [
+  {
+    h: 'Lives in Bitbucket, not Slack',
+    p: 'The nudge lands as a comment on the pull request — where the reviewer already is. No separate Slack app to adopt, no context-switch.',
+  },
+  {
+    h: 'Your code data never leaves Atlassian',
+    p: 'Built on Atlassian Forge with the <em>Runs on Atlassian</em> badge. No external egress — the opposite of the Slack bots.',
+  },
+  {
+    h: 'One job, done well',
+    p: 'Not a heavyweight eng-analytics suite. Set a review SLA, catch the PRs that breach it, see your compliance rate. That\'s it.',
+  },
+  {
+    h: 'A number your lead renews for',
+    p: 'A monthly "% of PRs reviewed within SLA" report — the review-latency visibility native Bitbucket simply doesn\'t give you.',
+  },
+];
+---
+
+<BaseLayout
+  wide
+  title="SLAdar — Code Review SLAs & Stale Pull Request Reminders for Bitbucket Cloud | OutpostLabs"
+  description="SLAdar puts an SLA on code review in Bitbucket Cloud: it flags stale pull requests, nudges reviewers right on the PR, and reports your review-latency and SLA-compliance rate — all inside Atlassian. Coming soon — get notified at launch."
+  canonical="/sladar/"
+  ogType="website"
+  ogImage="https://outpostlabs.dev/sladar/sladar-logo.svg"
+>
+  <!-- Structured data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'SLAdar — Code Review SLAs & Stale Pull Request Reminders',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Atlassian Bitbucket Cloud',
+    description:
+      'Put an SLA on code review in Bitbucket Cloud. SLAdar flags stale pull requests, nudges the reviewer on the PR, and reports your SLA-compliance rate — entirely inside Atlassian.',
+    url: 'https://outpostlabs.dev/sladar/',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free tier planned for small teams' },
+    publisher: { '@type': 'Organization', name: 'OutpostLabs', url: 'https://outpostlabs.dev' },
+  })} />
+
+  <!-- HERO -->
+  <section class="s-hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow"><span class="soon-dot"></span>Coming soon · Bitbucket Cloud</p>
+        <h1>Put an SLA on<br /><span class="amber">code review.</span></h1>
+        <p class="lede">
+          PRs sit for days waiting on review and you can't even see it. SLAdar sets a review
+          deadline, flags every stale pull request, and nudges the reviewer right on the PR —
+          then shows you the compliance rate. All inside Bitbucket. No Slack, no data leaving
+          Atlassian.
+        </p>
+        <form class="notify" action={kitAction} method="post" target="_blank" rel="noopener">
+          <input type="email" name="email_address" placeholder="you@company.com" aria-label="Email address" required />
+          <button class="btn btn-primary" type="submit">Notify me at launch</button>
+        </form>
+        <div class="chips">
+          <span class="chip"><span class="dot"></span>Runs on Atlassian</span>
+          <span class="chip">No data leaves Atlassian</span>
+          <span class="chip">Free tier planned</span>
+        </div>
+      </div>
+
+      <!-- PR card mock -->
+      <div class="prcard" role="img" aria-label="A Bitbucket pull request card showing SLAdar: the first-review SLA is breached by 4 hours 12 minutes, with a red BREACHED badge and an auto-posted nudge comment.">
+        <div class="pr-head">
+          <span class="pr-branch">feature/checkout-totals → main</span>
+          <span class="pr-badge">BREACHED</span>
+        </div>
+        <div class="pr-title">Refactor checkout totals calculation</div>
+        <div class="pr-sub">#482 · opened 2 days ago · reviewers alex, sam</div>
+        <div class="pr-slabox">
+          <div class="pr-slarow"><span>First-review SLA</span><span class="over">4h 12m over</span></div>
+          <div class="pr-bar"><i></i></div>
+        </div>
+        <div class="pr-nudge">
+          <span class="nudge-dot">🔴</span>
+          <span><strong>SLAdar — review SLA breached.</strong> This PR passed its review deadline. @alex @sam, this one needs attention.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="s-section">
+    <div class="wrap section-head">
+      <p class="eyebrow">The problem</p>
+      <h2>Slow reviews, zero visibility.</h2>
+      <p>
+        Code review is the delivery bottleneck on most teams — a PR waits a day, two days, and
+        nobody owns the delay. Native Bitbucket has no SLA concept and no per-person review
+        stats, so leads can't even see how bad it is. The fixes that exist are Slack bots that
+        drag your review data out of Atlassian, or enterprise analytics suites that are overkill
+        for "no PR sits past a day."
+      </p>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how" class="s-section alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Set it. Catch it. Report it.</h2>
+        <p>A focused Forge app for Bitbucket Cloud — no external tool, no data leaving Atlassian.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="ic">🎯</div>
+          <h3>Set a review SLA</h3>
+          <p>One workspace policy: first review within <em>N</em> working hours, merge decision within <em>M</em>. Weekends excluded. Sensible defaults so it works on day one.</p>
+        </div>
+        <div class="step">
+          <div class="ic">📡</div>
+          <h3>Catch &amp; nudge stale PRs</h3>
+          <p>SLAdar tracks every open PR against the clock. When one goes <em>at&nbsp;risk</em>, then <em>breached</em>, it comments on the PR to nudge the reviewer — once per stage, never spammy.</p>
+        </div>
+        <div class="step">
+          <div class="ic">📈</div>
+          <h3>Report compliance</h3>
+          <p>A dashboard of open PRs vs SLA (breaches in red, sorted by age) and a monthly "% reviewed within SLA" — the review-latency number your lead renews for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="s-section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Why SLAdar</p>
+        <h2>The in-Atlassian, does-one-job option</h2>
+      </div>
+      <div class="why">
+        {whys.map((w) => (
+          <div class="row">
+            <svg class="check" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div><h4>{w.h}</h4><p set:html={w.p} /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTIFY CTA BAND -->
+  <section class="band-wrap">
+    <div class="band">
+      <h2>Be first to put your reviews on the clock.</h2>
+      <p>SLAdar is in active development for Bitbucket Cloud. Drop your email and we'll tell you the day it lands on the Marketplace — no spam, unsubscribe anytime.</p>
+      <form class="notify notify-dark" action={kitAction} method="post" target="_blank" rel="noopener">
+        <input type="email" name="email_address" placeholder="you@company.com" aria-label="Email address" required />
+        <button class="btn btn-primary" type="submit">Notify me at launch</button>
+      </form>
+      <p class="fineprint">Powered by Kit. We'll only email you about SLAdar &amp; OutpostLabs updates.</p>
+    </div>
+  </section>
+
+  <style>
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--amber); margin: 0 0 14px; }
+    .soon-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--amber1), var(--amber2)); box-shadow: 0 0 0 4px rgba(255, 122, 47, 0.18); }
+    em { font-style: italic; color: inherit; }
+    .btn { display: inline-block; font-weight: 700; text-decoration: none; border-radius: 12px; padding: 14px 24px; font-size: 15px; border: 0; cursor: pointer; transition: transform 0.06s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+    .btn:hover { text-decoration: none; }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: linear-gradient(135deg, var(--amber1), var(--amber2)); color: #2a1400; box-shadow: 0 8px 22px rgba(255, 122, 47, 0.28); }
+
+    /* hero */
+    .s-hero { background: radial-gradient(1100px 500px at 80% -10%, #1b2c4b 0%, var(--navy) 55%); color: #fff; padding: 80px 0 88px; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 48px; align-items: center; }
+    .s-hero h1 { font-size: 52px; line-height: 1.06; letter-spacing: -1.5px; margin: 0 0 18px; font-weight: 800; }
+    .s-hero h1 .amber { background: linear-gradient(135deg, var(--amber1), var(--amber2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lede { font-size: 19px; color: var(--muted); max-width: 540px; margin: 0 0 26px; }
+
+    /* notify form */
+    .notify { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 22px; }
+    .notify input[type=email] { flex: 1; min-width: 240px; max-width: 340px; padding: 14px 16px; border: 1.5px solid #2a3a57; background: #0f1a2e; color: #fff; border-radius: 12px; font-size: 15px; font-family: inherit; }
+    .notify input[type=email]::placeholder { color: #6b7c99; }
+    .notify input[type=email]:focus { outline: none; border-color: var(--amber); }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #d7e1ef; background: #16233a; border: 1px solid #2a3a57; border-radius: 20px; padding: 7px 14px; }
+    .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--amber1), var(--amber2)); }
+
+    /* PR card mock */
+    .prcard { background: #fff; border: 1px solid #e3e9f2; border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); padding: 22px; color: var(--ink); }
+    .pr-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .pr-branch { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; color: #5a6b85; background: #f2f5fa; border: 1px solid #e7ecf3; padding: 4px 9px; border-radius: 7px; }
+    .pr-badge { font-size: 11.5px; font-weight: 800; letter-spacing: 0.6px; color: #fff; background: #e5484d; padding: 5px 10px; border-radius: 999px; }
+    .pr-title { font-size: 18px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.2px; }
+    .pr-sub { font-size: 13px; color: #7a879b; margin-bottom: 16px; }
+    .pr-slabox { background: #fff6f5; border: 1px solid #f6d4d3; border-radius: 12px; padding: 13px 14px; margin-bottom: 14px; }
+    .pr-slarow { display: flex; justify-content: space-between; font-size: 13.5px; font-weight: 600; margin-bottom: 9px; }
+    .pr-slarow .over { color: #d13b40; }
+    .pr-bar { height: 7px; border-radius: 999px; background: #f1dada; overflow: hidden; }
+    .pr-bar i { display: block; height: 100%; width: 100%; border-radius: 999px; background: linear-gradient(90deg, #f0a23c, #e5484d); }
+    .pr-nudge { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; line-height: 1.55; color: #384356; background: #f7f9fc; border: 1px solid #e7ecf3; border-radius: 12px; padding: 12px 13px; }
+    .pr-nudge strong { color: var(--ink); }
+    .nudge-dot { flex: none; }
+
+    /* sections */
+    .s-section { padding: 76px 0; }
+    .alt { background: var(--paper); }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 46px; }
+    .section-head h2 { font-size: 34px; letter-spacing: -0.8px; margin: 6px 0 12px; }
+    .section-head p { color: var(--slate); font-size: 18px; margin: 0; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .step { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+    .step .ic { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: linear-gradient(135deg, #fff2e0, #ffe3cc); margin-bottom: 16px; }
+    .step h3 { font-size: 19px; margin: 0 0 8px; }
+    .step p { color: var(--slate); margin: 0; font-size: 15.5px; }
+
+    .why { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 40px; max-width: 900px; margin: 0 auto; }
+    .why .row { display: flex; gap: 13px; align-items: flex-start; }
+    .why .check { color: #22c55e; flex: none; margin-top: 2px; }
+    .why h4 { margin: 0 0 3px; font-size: 16.5px; }
+    .why p { margin: 0; color: var(--slate); font-size: 15px; }
+    .why em { color: var(--ink); font-style: italic; }
+
+    /* notify band */
+    .band-wrap { padding: 20px 0 84px; }
+    .band { max-width: 1032px; margin: 0 auto; background: var(--navy); color: #fff; text-align: center; border-radius: 24px; padding: 56px 28px; }
+    .band h2 { font-size: 32px; letter-spacing: -0.6px; margin: 0 0 10px; }
+    .band p { color: var(--muted); margin: 0 0 22px; font-size: 17px; max-width: 620px; margin-left: auto; margin-right: auto; }
+    .notify-dark { justify-content: center; margin-bottom: 12px; }
+    .fineprint { color: #8a99ad; font-size: 12.5px; margin: 0; }
+
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+      .s-hero h1 { font-size: 40px; }
+      .steps { grid-template-columns: 1fr; }
+      .why { grid-template-columns: 1fr; }
+      .section-head h2 { font-size: 28px; }
+    }
+  </style>
+</BaseLayout>

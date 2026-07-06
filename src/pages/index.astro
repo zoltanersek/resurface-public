@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout
   wide
   title="OutpostLabs — small, focused apps that do one thing well"
-  description="OutpostLabs is an independent software studio building small, focused apps that solve one real problem well. Home of Resurface (retro action item tracker for Jira) and Berth (isolated dev environments for parallel AI coding agents)."
+  description="OutpostLabs is an independent software studio building small, focused apps that solve one real problem well. Home of Resurface (retro action item tracker for Jira), SLAdar (code review SLAs & stale pull request reminders for Bitbucket Cloud), and Berth (isolated dev environments for parallel AI coding agents)."
 >
   <!-- HERO -->
   <section class="hero">
@@ -53,6 +53,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p>
             Retro &amp; sprint action items become owned, due-dated Jira issues that resurface until
             they're actually done.
+          </p>
+          <span class="card-link">Learn more →</span>
+        </a>
+
+        <a class="card" href="/sladar/">
+          <span class="card-logo">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="32" height="32" rx="8" fill="#0E1726" />
+              <g stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="16" cy="16" r="9.5" stroke-width="2.2" />
+                <circle cx="16" cy="16" r="4.8" stroke-width="2.2" />
+                <path d="M16 16 L23.4 8.6" stroke-width="2.5" />
+              </g>
+              <circle cx="21" cy="11" r="2" fill="#FF9A4A" />
+            </svg>
+          </span>
+          <h3>SLAdar <span class="soon-tag">Coming soon</span></h3>
+          <p>
+            Put an SLA on code review in Bitbucket Cloud. SLAdar flags stale pull requests,
+            nudges the reviewer on the PR, and reports your SLA-compliance rate — all inside
+            Atlassian.
           </p>
           <span class="card-link">Learn more →</span>
         </a>
@@ -226,6 +247,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .card h3 {
       font-size: 21px;
       margin: 0 0 10px;
+    }
+    .soon-tag {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--amber2);
+      background: rgba(255, 122, 47, 0.12);
+      border: 1px solid rgba(255, 122, 47, 0.28);
+      border-radius: 999px;
+      padding: 3px 9px;
     }
     .card p {
       color: var(--slate);
