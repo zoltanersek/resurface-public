@@ -7,15 +7,21 @@ export interface Props {
   frontmatter: {
     title: string;
     description?: string;
+    /** Where the "← Back" link points. Defaults to the Resurface product page. */
+    backHref?: string;
+    /** The "← Back" link text. Defaults to Resurface. */
+    backLabel?: string;
   };
 }
 
 const { frontmatter } = Astro.props;
+const backHref = frontmatter.backHref ?? '/resurface/';
+const backLabel = frontmatter.backLabel ?? '← Back to Resurface';
 ---
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
   <article class="prose">
-    <p class="back"><a href="/resurface/">← Back to Resurface</a></p>
+    <p class="back"><a href={backHref}>{backLabel}</a></p>
     <slot />
   </article>
 

@@ -1,0 +1,429 @@
+---
+// SLAdar documentation. An Astro route so /sladar/docs/ resolves in dev, preview, and
+// production alike. Shares the OutpostLabs site chrome and palette (navy header, amber
+// accents) with the Resurface docs for a consistent look.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SLAdar — Docs | Code Review SLAs &amp; Stale Pull Request Reminders for Bitbucket Cloud</title>
+    <meta
+      name="description"
+      content="Documentation for SLAdar: put an SLA on code review in Bitbucket Cloud. Set first-review and merge-decision deadlines, nudge stale pull requests on the PR, and see live SLA-compliance — all inside Atlassian."
+    />
+    <meta name="theme-color" content="#0E1726" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style is:global>
+      :root {
+        --navy: #0e1726;
+        --navy2: #132038;
+        --ink: #101b2e;
+        --slate: #5a6b85;
+        --paper: #f7f9fc;
+        --line: #e7ecf3;
+        --amber1: #ffc24b;
+        --amber2: #ff7a2f;
+        --amber: #ff7a2f;
+        --white: #ffffff;
+        --muted: #a9b8ce;
+        --radius: 12px;
+        --maxw: 880px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--white);
+        font: 16px/1.65 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+          Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--amber2); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+      /* site header */
+      header.site { background: var(--navy); position: sticky; top: 0; z-index: 20; border-bottom: 1px solid #1c2942; }
+      header.site .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+      header.site .brand { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-weight: 800; font-size: 19px; }
+      header.site .brand:hover { text-decoration: none; }
+      header.site .brand .logo { width: 38px; height: 38px; flex: none; }
+      header.site .brand small { display: block; font-weight: 500; font-size: 11px; color: #8da0bc; letter-spacing: 0.2px; margin-top: -2px; }
+      header.site .nav-right { display: flex; align-items: center; gap: 20px; }
+      header.site .nav-right .navlink { color: #c8d5e6; text-decoration: none; font-weight: 600; font-size: 14px; }
+      header.site .nav-right .navlink:hover { color: #fff; }
+      .btn { display: inline-block; font-weight: 700; text-decoration: none; border-radius: 12px; padding: 10px 18px; font-size: 14px; transition: transform 0.06s ease, box-shadow 0.2s ease; }
+      .btn:hover { text-decoration: none; }
+      .btn:active { transform: translateY(1px); }
+      .btn-primary { background: linear-gradient(135deg, var(--amber1), var(--amber2)); color: #2a1400; box-shadow: 0 8px 22px rgba(255, 122, 47, 0.28); }
+
+      /* hero */
+      header.hero { background: radial-gradient(1100px 500px at 80% -10%, #1b2c4b 0%, var(--navy) 55%); color: #fff; padding: 56px 0 48px; }
+      header.hero .brand { display: flex; align-items: center; gap: 14px; }
+      header.hero .brand .logo { width: 48px; height: 48px; flex: none; }
+      header.hero .brand h1 { margin: 0; font-size: 26px; letter-spacing: -0.01em; }
+      header.hero p.tag { margin: 18px 0 0; font-size: 19px; max-width: 640px; color: var(--muted); }
+      header.hero .badges { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+      .badge { display: inline-flex; align-items: center; gap: 8px; background: #16233a; border: 1px solid #2a3a57; color: #d7e1ef; padding: 6px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+
+      /* toc */
+      nav.toc { position: sticky; top: 66px; z-index: 10; background: rgba(255, 255, 255, 0.92); backdrop-filter: saturate(180%) blur(8px); border-bottom: 1px solid var(--line); }
+      nav.toc .wrap { display: flex; flex-wrap: wrap; gap: 4px 18px; padding-top: 12px; padding-bottom: 12px; }
+      nav.toc a { color: var(--slate); font-size: 14px; font-weight: 600; }
+      nav.toc a:hover { color: var(--amber); text-decoration: none; }
+
+      /* sections */
+      main { padding: 8px 0 40px; }
+      section { padding: 34px 0 8px; border-bottom: 1px solid var(--line); }
+      section:last-of-type { border-bottom: 0; }
+      h2 { font-size: 22px; margin: 0 0 6px; letter-spacing: -0.01em; scroll-margin-top: 130px; }
+      h3 { font-size: 16px; margin: 22px 0 4px; }
+      p, ul, ol { color: #344563; }
+      ul.clean { list-style: none; padding-left: 0; }
+      ul.clean li { padding-left: 26px; position: relative; margin: 8px 0; }
+      ul.clean li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--amber2); font-weight: 700; }
+      code { background: var(--paper); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; color: var(--amber2); }
+      .lead { font-size: 18px; color: var(--slate); }
+      .note { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: var(--radius); padding: 14px 16px; margin: 18px 0; }
+      .note strong { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 15px; }
+      th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      th { color: var(--slate); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0; }
+      .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; background: #fff; }
+      .card h3 { margin-top: 0; }
+
+      details { border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 16px; margin: 10px 0; background: #fff; }
+      details summary { cursor: pointer; font-weight: 600; padding: 10px 0; color: var(--ink); }
+      details[open] summary { color: var(--amber); }
+      details p { margin-top: 0; }
+
+      footer.site { background: var(--navy); color: #9fb0c8; padding: 44px 0; font-size: 14px; }
+      footer.site .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+      footer.site .foot a { color: #c8d5e6; text-decoration: none; margin-left: 20px; }
+      footer.site .foot .links a:first-child { margin-left: 0; }
+      footer.site .foot a:hover { color: #fff; }
+
+      @media (max-width: 560px) {
+        header.site .nav-right .navlink { display: none; }
+        footer.site .foot a { margin-left: 0; margin-right: 18px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap nav">
+        <a class="brand" href="/sladar/" aria-label="SLAdar home">
+          <img class="logo" src="/sladar/sladar-logo.svg" alt="" aria-hidden="true" />
+          <span>SLAdar<small>by OutpostLabs.dev</small></span>
+        </a>
+        <div class="nav-right">
+          <a class="navlink" href="/">Home</a>
+          <a class="btn btn-primary" href="/sladar/">Get notified at launch</a>
+        </div>
+      </div>
+    </header>
+
+    <header class="hero">
+      <div class="wrap">
+        <div class="brand">
+          <img class="logo" src="/sladar/sladar-logo.svg" alt="" aria-hidden="true" />
+          <h1>SLAdar Docs</h1>
+        </div>
+        <p class="tag">
+          Put an SLA on code review in Bitbucket Cloud: set review deadlines, catch every stale
+          pull request, nudge the right person on the PR, and see your compliance rate — all
+          inside Atlassian.
+        </p>
+        <div class="badges">
+          <span class="badge">Runs on Atlassian</span>
+          <span class="badge">No external data egress</span>
+          <span class="badge">Free tier planned</span>
+          <span class="badge">Coming soon</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <div class="wrap">
+        <a href="#overview">Overview</a>
+        <a href="#start">Getting started</a>
+        <a href="#policy">Set an SLA</a>
+        <a href="#card">The PR card</a>
+        <a href="#nudges">Nudges</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#compliance">Compliance</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="wrap">
+      <section id="overview">
+        <h2>What SLAdar does</h2>
+        <p class="lead">
+          Pull requests sit for days waiting on a review, and native Bitbucket gives you no way to
+          see it, let alone act on it. SLAdar fixes that — without a Slack bot and without your
+          code data leaving Atlassian.
+        </p>
+        <p>
+          You set a review SLA for the workspace. SLAdar then tracks every open pull request
+          against that clock, flags the ones going <strong>at&nbsp;risk</strong> and
+          <strong>breached</strong>, posts a nudge comment on the PR to the person who can unblock
+          it, and shows a live dashboard plus a monthly compliance rate. It is a focused Forge app
+          for Bitbucket Cloud — one job, done well.
+        </p>
+      </section>
+
+      <section id="start">
+        <h2>Getting started</h2>
+        <p>
+          After a workspace admin installs SLAdar from the Atlassian Marketplace, you'll find it in
+          three places:
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>Pull request card</h3>
+            <p>On any pull request — a status pill and a live countdown to the review deadline.</p>
+          </div>
+          <div class="card">
+            <h3>Workspace dashboard</h3>
+            <p><em>Workspace → SLAdar</em> — every open PR vs SLA, plus the compliance summary.</p>
+          </div>
+          <div class="card">
+            <h3>Settings</h3>
+            <p><em>Workspace settings → SLAdar settings</em> — the review SLA policy.</p>
+          </div>
+        </div>
+        <div class="note">
+          <strong>Works on day one.</strong> Sensible defaults (first review within 8 working
+          hours, merge decision within 48, weekends excluded) apply before you configure anything.
+        </div>
+      </section>
+
+      <section id="policy">
+        <h2>Set an SLA</h2>
+        <p>From <em>Workspace settings → SLAdar settings</em>, configure one workspace policy:</p>
+        <ul class="clean">
+          <li><strong>First-review SLA</strong> — working hours for someone to first review a PR. Leave blank to not track first review.</li>
+          <li><strong>Merge-decision SLA</strong> — working hours to merge or decline a PR. Leave blank to not track it.</li>
+          <li><strong>Warn before breach</strong> — how many hours ahead of a deadline a PR turns <em>at&nbsp;risk</em> (0 = no early warning; straight to breached).</li>
+          <li><strong>Skip weekends</strong> — Saturdays and Sundays don't count toward the SLA.</li>
+        </ul>
+        <div class="note">
+          <strong>Whole hours.</strong> SLAs are set in whole working hours — the smallest is
+          <strong>1&nbsp;hour</strong>, and <strong>2&nbsp;hours</strong> if you want an early
+          "at&nbsp;risk" warning stage (the hourly engine can't resolve finer). The warning window
+          must be shorter than the smallest SLA budget.
+        </div>
+        <p>
+          SLAdar uses a simple, correct "skip weekends" clock — no timezone or business-hours engine
+          yet. All time math is UTC.
+        </p>
+      </section>
+
+      <section id="card">
+        <h2>The pull request card</h2>
+        <p>
+          On every pull request, the SLAdar card shows a status pill — <strong>On track</strong>,
+          <strong>At risk</strong>, <strong>Breached</strong>, or <strong>Met</strong> — and a
+          plain-English countdown such as <code>SLA: 7h 59m remaining</code> or
+          <code>BREACHED — 4h 12m over</code>. It recomputes live every time you open the PR, so it
+          is always current between hourly sweeps.
+        </p>
+      </section>
+
+      <section id="nudges">
+        <h2>Nudges</h2>
+        <p>
+          An hourly job checks every tracked PR against its SLA. When a PR crosses a stage, SLAdar
+          posts a comment on the PR — delivered by Bitbucket's own notifications — and it targets
+          the person who can actually unblock it:
+        </p>
+        <table>
+          <thead>
+            <tr><th>Situation</th><th>Who gets nudged</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>First-review SLA at risk / breached</td><td>The <strong>reviewers</strong> ("please take a look").</td></tr>
+            <tr><td>First-review breached, no reviewer assigned</td><td>The <strong>author</strong> ("please add a reviewer").</td></tr>
+            <tr><td>Merge-decision SLA at risk / breached</td><td>The <strong>author</strong> ("please merge or decline it").</td></tr>
+          </tbody>
+        </table>
+        <ul class="clean">
+          <li><strong>Once per stage.</strong> A PR is nudged when it enters <em>at&nbsp;risk</em>, then again when it <em>breaches</em> — never repeatedly. Re-running the job posts nothing new.</li>
+          <li><strong>No spam, no external tools.</strong> The nudge is a PR comment. No Slack, no email from us, nothing leaves Atlassian.</li>
+        </ul>
+        <div class="note">
+          <strong>Merged and declined PRs are never nudged.</strong> The hourly sweep also
+          self-heals: it reconciles each tracked PR against Bitbucket, so a missed event (a
+          force-push, a reopen, a reviewer change) is corrected on the next run.
+        </div>
+      </section>
+
+      <section id="dashboard">
+        <h2>Dashboard</h2>
+        <p>
+          <em>Workspace → SLAdar</em> lists every open PR with its number (linked), title (linked),
+          repo, reviewers, age, and SLA status. Breached rows show in red and the list is sorted
+          oldest-first, so the most-aged PRs rise to the top.
+        </p>
+        <h3>Filters</h3>
+        <p>Narrow by <strong>repository</strong> (dropdown) or to <strong>breached only</strong> (toggle). Status is <strong>live</strong> — a PR that just crossed its deadline shows Breached on reload, before the next hourly sweep.</p>
+      </section>
+
+      <section id="compliance">
+        <h2>Compliance</h2>
+        <p>
+          Above the table, two cards summarise the month:
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>First review</h3>
+            <p>% of decided PRs that got a first review within the SLA, with a met / missed / counted breakdown.</p>
+          </div>
+          <div class="card">
+            <h3>Merge decision</h3>
+            <p>% of PRs decided (merged or declined) rather than left open past the merge deadline.</p>
+          </div>
+        </div>
+        <p>
+          Each card carries a health indicator (On&nbsp;track / Watch / At&nbsp;risk) and a progress
+          bar. PRs still within their deadline are "pending" and excluded from the denominator, so
+          the number stays honest.
+        </p>
+        <div class="note">
+          <strong>The two clocks are separate.</strong> A PR reviewed on time but left unmerged past
+          its merge deadline counts as <em>met</em> on the First-review card and <em>overdue</em> on
+          the Merge-decision card — the same PR, two different questions.
+        </div>
+      </section>
+
+      <section id="privacy">
+        <h2>Privacy &amp; permissions</h2>
+        <p>
+          SLAdar is built on Atlassian Forge and runs entirely inside Atlassian Cloud. It makes
+          <strong>no requests to any external server</strong> and stores only a small SLA layer over
+          each PR (PR number/title/link, author &amp; reviewer display names, timestamps, SLA status,
+          and the nudge ledger) plus your policy and settings. It does <strong>not</strong> store your
+          code, diffs, commits, or comment threads.
+        </p>
+        <table>
+          <thead>
+            <tr><th>Scope</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>read:pullrequest:bitbucket</td><td>Read PRs (title, reviewers, state, timestamps) to track SLAs.</td></tr>
+            <tr><td>write:pullrequest:bitbucket</td><td>Post the nudge comment on a stale PR.</td></tr>
+            <tr><td>read:repository:bitbucket</td><td>Identify the repository a PR belongs to.</td></tr>
+            <tr><td>read:workspace:bitbucket</td><td>Scope tracking and the dashboard to your workspace.</td></tr>
+            <tr><td>storage:app</td><td>Persist the SLA layer, policy, and settings in Forge storage.</td></tr>
+          </tbody>
+        </table>
+        <p>
+          See the full <a href="/sladar/privacy/">Privacy Policy</a>,
+          <a href="/sladar/terms/">Terms of Service</a>, and
+          <a href="/sladar/sla/">Support SLA</a>.
+        </p>
+      </section>
+
+      <section id="faq">
+        <h2>FAQ</h2>
+
+        <details>
+          <summary>Does SLAdar send anything to Slack or an external service?</summary>
+          <p>
+            No. SLAdar is "Runs on Atlassian" — it makes no external network calls. Nudges are
+            comments posted on the pull request itself, delivered by Bitbucket's own notifications.
+            Your code data never leaves Atlassian.
+          </p>
+        </details>
+
+        <details>
+          <summary>What's the difference between the first-review and merge-decision SLAs?</summary>
+          <p>
+            The <strong>first-review</strong> clock asks "did someone review this in time?" and is
+            met when a reviewer first approves or requests changes. The
+            <strong>merge-decision</strong> clock asks "was this resolved in time?" and is met when
+            the PR is merged or declined. They run in parallel and are reported separately.
+          </p>
+        </details>
+
+        <details>
+          <summary>What's the smallest SLA I can set?</summary>
+          <p>
+            SLAs are whole working hours, so the minimum is 1 hour — or 2 hours if you want an
+            early "at risk" warning before the breach. The background job runs hourly, so anything
+            finer couldn't be enforced anyway.
+          </p>
+        </details>
+
+        <details>
+          <summary>How often are people nudged, and can it get spammy?</summary>
+          <p>
+            A PR is nudged at most once when it enters "at risk" and once when it breaches — never
+            repeatedly. Set the warning window to 0 for breach-only nudges.
+          </p>
+        </details>
+
+        <details>
+          <summary>What if a PR has no reviewer assigned?</summary>
+          <p>
+            It's still tracked. When its first-review SLA breaches, the nudge asks the
+            <strong>author</strong> to add a reviewer, since there's nobody else to chase.
+          </p>
+        </details>
+
+        <details>
+          <summary>Does it handle weekends and timezones?</summary>
+          <p>
+            The clock skips Saturdays and Sundays. It does not yet model business hours,
+            holidays, or per-team timezones — time math is UTC. A correct simple clock beats a
+            subtly wrong sophisticated one.
+          </p>
+        </details>
+
+        <details>
+          <summary>What does it cost?</summary>
+          <p>
+            A free tier is planned for small teams, with paid tiers above that. Billing is handled
+            entirely by the Atlassian Marketplace.
+          </p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <p>
+          Questions, bugs, or feedback? Email
+          <a href="mailto:support@outpostlabs.dev">support@outpostlabs.dev</a>. We provide
+          best-effort, asynchronous support — see the <a href="/sladar/sla/">Support SLA</a> for
+          response targets.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site">
+      <div class="wrap foot">
+        <div>© <span id="yr"></span> OutpostLabs.dev — small, focused apps that do one thing well.</div>
+        <div class="links">
+          <a href="/">OutpostLabs</a>
+          <a href="/sladar/">SLAdar</a>
+          <a href="/sladar/privacy/">Privacy</a>
+          <a href="/sladar/terms/">Terms</a>
+          <a href="/sladar/sla/">SLA</a>
+        </div>
+      </div>
+    </footer>
+    <script is:inline>
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
