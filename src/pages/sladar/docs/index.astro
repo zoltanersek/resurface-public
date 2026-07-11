@@ -233,10 +233,14 @@
         <h2>The pull request card</h2>
         <p>
           On every pull request, the SLAdar card shows a status pill — <strong>On track</strong>,
-          <strong>At risk</strong>, <strong>Breached</strong>, or <strong>Met</strong> — and a
-          plain-English countdown such as <code>SLA: 7h 59m remaining</code> or
-          <code>BREACHED — 4h 12m over</code>. It recomputes live every time you open the PR, so it
-          is always current between hourly sweeps.
+          <strong>At risk</strong>, <strong>Breached</strong>, <strong>Met</strong>, or
+          <strong>Draft</strong> — and a plain-English countdown for the clock that matters right
+          now: the <strong>first-review</strong> deadline until someone reviews it, then the
+          <strong>merge-decision</strong> deadline. So you'll see labels like
+          <code>Review SLA: 7h 59m remaining</code>, <code>Merge SLA: 1d 4h remaining</code>, or
+          <code>Review SLA breached — 4h 12m over</code>. A draft PR shows
+          <code>Draft — not tracked</code> — the clock starts when it's marked ready for review. It
+          recomputes live every time you open the PR, so it's always current between hourly sweeps.
         </p>
       </section>
 
@@ -291,13 +295,14 @@
           </div>
           <div class="card">
             <h3>Merge decision</h3>
-            <p>% of PRs decided (merged or declined) rather than left open past the merge deadline.</p>
+            <p>% of PRs decided (merged or declined) in time — breached if merged/declined late, or left open past the merge deadline.</p>
           </div>
         </div>
         <p>
-          Each card carries a health indicator (On&nbsp;track / Watch / At&nbsp;risk) and a progress
-          bar. PRs still within their deadline are "pending" and excluded from the denominator, so
-          the number stays honest.
+          Each card carries a health indicator (On&nbsp;track / Watch / At&nbsp;risk, or
+          Not&nbsp;tracking when that SLA isn't set) and a progress bar. PRs still within their
+          deadline are "pending" and excluded from the denominator — as are drafts and PRs closed
+          before a review was due — so the number stays honest.
         </p>
         <div class="note">
           <strong>The two clocks are separate.</strong> A PR reviewed on time but left unmerged past
