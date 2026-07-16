@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Kit (ConvertKit) form endpoint — same OutpostLabs list Resurface & SLAdar use.
+const kitAction = 'https://app.kit.com/forms/9637468/subscriptions';
+
+const whys = [
+  {
+    h: 'Alerts, not another map',
+    p: 'Every dependency app <em>visualizes</em>; none notify. Tripwire is the missing half — it pushes the bad news, so it complements your map app and competes with none.',
+  },
+  {
+    h: 'Made for Jira Standard',
+    p: 'No Advanced Roadmaps? That\'s the point. Works on every Jira Cloud plan — the orgs Premium leaves behind are exactly who this is for.',
+  },
+  {
+    h: 'Zero Automation quota',
+    p: 'Runs on Forge, not Jira Automation — watching every date change across projects costs none of the pooled ~1,700 executions/month a Standard site gets.',
+  },
+  {
+    h: 'Built not to spam',
+    p: 'Max one alert per dependency per day, bulk reshuffles fold into a single summary, a weekly digest, one-click mute — and blame-free wording throughout.',
+  },
+];
+---
+
+<BaseLayout
+  wide
+  title="Tripwire — Dependency Slip Alerts for Jira | OutpostLabs"
+  description="Tripwire alerts the right person when a Jira issue your team depends on slips — due date pushed, sprint punted, or gone stale. Blame-free comments, a weekly digest, and an at-risk dashboard. Zero Automation quota, works on Jira Standard. Coming soon — get notified at launch."
+  canonical="/tripwire/"
+  ogType="website"
+  ogImage="https://outpostlabs.dev/tripwire/tripwire-logo.svg"
+>
+  <!-- Structured data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Tripwire — Dependency Slip Alerts for Jira',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Atlassian Jira Cloud',
+    description:
+      'When an issue your team depends on slips — due date pushed later, punted from a sprint, or gone stale — Tripwire notifies the dependent team\'s assignee and lead automatically, right on the issue. No Automation rules, no quota used, works on every Jira Cloud plan.',
+    url: 'https://outpostlabs.dev/tripwire/',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free tier planned for small teams' },
+    publisher: { '@type': 'Organization', name: 'OutpostLabs', url: 'https://outpostlabs.dev' },
+  })} />
+
+  <!-- HERO -->
+  <section class="s-hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow"><span class="soon-dot"></span>Coming soon · Jira Cloud</p>
+        <h1>Put a tripwire on<br /><span class="amber">every dependency.</span></h1>
+        <p class="lede">
+          Your team depends on issues owned by other teams. When one slips — due date pushed,
+          punted to the next sprint, gone quiet — Jira tells no one. Tripwire watches the
+          "blocks" links you already use and notifies the dependent team's assignee and lead
+          the minute a blocker slips. Zero rules to write, zero Automation quota used.
+        </p>
+        <form class="notify" action={kitAction} method="post" target="_blank" rel="noopener">
+          <input type="email" name="email_address" placeholder="you@company.com" aria-label="Email address" required />
+          <button class="btn btn-primary" type="submit">Notify me at launch</button>
+        </form>
+        <div class="chips">
+          <span class="chip"><span class="dot"></span>Runs on Atlassian</span>
+          <span class="chip">No data leaves Atlassian</span>
+          <span class="chip">Free tier planned</span>
+        </div>
+      </div>
+
+      <!-- Jira issue card mock -->
+      <div class="jcard" role="img" aria-label="A Jira issue card showing Tripwire in action: the blocking issue's due date moved two weeks later, and Tripwire posted a comment notifying the dependent team's assignee and lead.">
+        <div class="j-head">
+          <span class="j-key">SHOP-142 · Checkout revamp</span>
+          <span class="j-badge">SLIPPED</span>
+        </div>
+        <div class="j-title">New totals flow — blocked by payments migration</div>
+        <div class="j-sub">Sprint 24 · assignee maya · blocked by PLAT-87 (Platform team)</div>
+        <div class="j-comment">
+          <div class="j-avatar" aria-hidden="true">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="8" fill="#0E1726" />
+              <path d="M5.5 14.5 L12.5 14.5 L16 20 L19.5 14.5 L26.5 14.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="16" cy="20" r="2.2" fill="#FF9A4A" />
+            </svg>
+          </div>
+          <div>
+            <div class="j-author">Tripwire <span class="j-app">APP</span> <span class="j-when">· just now</span></div>
+            <p class="j-body">⚠️ <strong>Dependency slipped:</strong> PLAT-87 "Payments service migration" — due date moved <strong>Jul 12 → Jul 26</strong> (14 days later). This issue depends on it. <span class="j-mention">@maya</span> <span class="j-mention">@tomas</span></p>
+            <p class="j-foot">Tripwire — Dependency Slip Alerts · dashboard · mute this project</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="s-section">
+    <div class="wrap section-head">
+      <p class="eyebrow">The problem</p>
+      <h2>You find out at sprint review.</h2>
+      <p>
+        Another team's blocker slips — the date quietly moves, the ticket gets punted — and the
+        first your team hears of it is a burned sprint. Jira writes the slip to the changelog
+        and tells no one. Fifteen-plus dependency apps will draw you a map, but a map only
+        works if someone is looking. Advanced Roadmaps shows passive red arrows — Premium-only.
+        And hand-rolled Automation rules are per-project fiddly while every run eats the pooled
+        quota your Standard site needs for everything else.
+      </p>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how" class="s-section alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Install it. Forget it. It tells you.</h2>
+        <p>A focused Forge app for Jira Cloud — no external tool, no data leaving Atlassian.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="ic">⚡</div>
+          <h3>Install. That's the setup.</h3>
+          <p>Tripwire watches the built-in <em>"blocks"</em> links you already use, across every project, with sensible defaults. No rules to write — the first slip anywhere produces a correct alert.</p>
+        </div>
+        <div class="step">
+          <div class="ic">📣</div>
+          <h3>Slips get pushed, not drawn</h3>
+          <p>Due date pushed later, sprint punt, or a blocker gone quiet for a week: the dependent issue gets a comment @mentioning its assignee and project lead within a minute. And when the blocker resolves — <em>"you're unblocked ✅"</em>.</p>
+        </div>
+        <div class="step">
+          <div class="ic">📊</div>
+          <h3>A digest for Monday, a dashboard for triage</h3>
+          <p>A weekly per-project digest of new slips, at-risk dependencies, and wins — plus a Dependencies-at-Risk dashboard for the 10-minute triage that replaces the cross-team status meeting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="s-section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Why Tripwire</p>
+        <h2>The enforcement layer the map apps never built</h2>
+      </div>
+      <div class="why">
+        {whys.map((w) => (
+          <div class="row">
+            <svg class="check" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div><h4>{w.h}</h4><p set:html={w.p} /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTIFY CTA BAND -->
+  <section class="band-wrap">
+    <div class="band">
+      <h2>Be first to catch the silent slip.</h2>
+      <p>Tripwire is in active development for Jira Cloud. Drop your email and we'll tell you the day it lands on the Marketplace — no spam, unsubscribe anytime.</p>
+      <form class="notify notify-dark" action={kitAction} method="post" target="_blank" rel="noopener">
+        <input type="email" name="email_address" placeholder="you@company.com" aria-label="Email address" required />
+        <button class="btn btn-primary" type="submit">Notify me at launch</button>
+      </form>
+      <p class="fineprint">Powered by Kit. We'll only email you about Tripwire &amp; OutpostLabs updates.</p>
+    </div>
+  </section>
+
+  <style>
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--amber); margin: 0 0 14px; }
+    .soon-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--amber1), var(--amber2)); box-shadow: 0 0 0 4px rgba(255, 122, 47, 0.18); }
+    em { font-style: italic; color: inherit; }
+    .btn { display: inline-block; font-weight: 700; text-decoration: none; border-radius: 12px; padding: 14px 24px; font-size: 15px; border: 0; cursor: pointer; transition: transform 0.06s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+    .btn:hover { text-decoration: none; }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: linear-gradient(135deg, var(--amber1), var(--amber2)); color: #2a1400; box-shadow: 0 8px 22px rgba(255, 122, 47, 0.28); }
+
+    /* hero */
+    .s-hero { background: radial-gradient(1100px 500px at 80% -10%, #1b2c4b 0%, var(--navy) 55%); color: #fff; padding: 80px 0 88px; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 48px; align-items: center; }
+    .s-hero h1 { font-size: 52px; line-height: 1.06; letter-spacing: -1.5px; margin: 0 0 18px; font-weight: 800; }
+    .s-hero h1 .amber { background: linear-gradient(135deg, var(--amber1), var(--amber2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lede { font-size: 19px; color: var(--muted); max-width: 540px; margin: 0 0 26px; }
+
+    /* notify form */
+    .notify { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 22px; }
+    .notify input[type=email] { flex: 1; min-width: 240px; max-width: 340px; padding: 14px 16px; border: 1.5px solid #2a3a57; background: #0f1a2e; color: #fff; border-radius: 12px; font-size: 15px; font-family: inherit; }
+    .notify input[type=email]::placeholder { color: #6b7c99; }
+    .notify input[type=email]:focus { outline: none; border-color: var(--amber); }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #d7e1ef; background: #16233a; border: 1px solid #2a3a57; border-radius: 20px; padding: 7px 14px; }
+    .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--amber1), var(--amber2)); }
+
+    /* Jira issue card mock */
+    .jcard { background: #fff; border: 1px solid #e3e9f2; border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); padding: 22px; color: var(--ink); }
+    .j-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .j-key { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; color: #5a6b85; background: #f2f5fa; border: 1px solid #e7ecf3; padding: 4px 9px; border-radius: 7px; }
+    .j-badge { font-size: 11.5px; font-weight: 800; letter-spacing: 0.6px; color: #fff; background: #e5484d; padding: 5px 10px; border-radius: 999px; }
+    .j-title { font-size: 18px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.2px; }
+    .j-sub { font-size: 13px; color: #7a879b; margin-bottom: 16px; }
+    .j-comment { display: flex; gap: 11px; align-items: flex-start; background: #f7f9fc; border: 1px solid #e7ecf3; border-radius: 12px; padding: 13px 14px; }
+    .j-avatar { flex: none; width: 30px; height: 30px; }
+    .j-avatar svg { width: 30px; height: 30px; display: block; }
+    .j-author { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .j-app { font-size: 9.5px; font-weight: 800; letter-spacing: 0.5px; color: #5a6b85; background: #eef2f8; border: 1px solid #e0e7f0; border-radius: 4px; padding: 1px 5px; vertical-align: 1px; }
+    .j-when { color: #8b97ab; font-weight: 500; }
+    .j-body { font-size: 13px; line-height: 1.55; color: #384356; margin: 0 0 8px; }
+    .j-body strong { color: var(--ink); }
+    .j-mention { color: #1868db; font-weight: 600; background: #e9f0fd; border-radius: 4px; padding: 0 4px; }
+    .j-foot { font-size: 11.5px; color: #8b97ab; font-style: italic; margin: 0; }
+
+    /* sections */
+    .s-section { padding: 76px 0; }
+    .alt { background: var(--paper); }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 46px; }
+    .section-head h2 { font-size: 34px; letter-spacing: -0.8px; margin: 6px 0 12px; }
+    .section-head p { color: var(--slate); font-size: 18px; margin: 0; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .step { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+    .step .ic { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: linear-gradient(135deg, #fff2e0, #ffe3cc); margin-bottom: 16px; }
+    .step h3 { font-size: 19px; margin: 0 0 8px; }
+    .step p { color: var(--slate); margin: 0; font-size: 15.5px; }
+
+    .why { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 40px; max-width: 900px; margin: 0 auto; }
+    .why .row { display: flex; gap: 13px; align-items: flex-start; }
+    .why .check { color: #22c55e; flex: none; margin-top: 2px; }
+    .why h4 { margin: 0 0 3px; font-size: 16.5px; }
+    .why p { margin: 0; color: var(--slate); font-size: 15px; }
+    .why em { color: var(--ink); font-style: italic; }
+
+    /* notify band */
+    .band-wrap { padding: 20px 0 84px; }
+    .band { max-width: 1032px; margin: 0 auto; background: var(--navy); color: #fff; text-align: center; border-radius: 24px; padding: 56px 28px; }
+    .band h2 { font-size: 32px; letter-spacing: -0.6px; margin: 0 0 10px; }
+    .band p { color: var(--muted); margin: 0 0 22px; font-size: 17px; max-width: 620px; margin-left: auto; margin-right: auto; }
+    .notify-dark { justify-content: center; margin-bottom: 12px; }
+    .fineprint { color: #8a99ad; font-size: 12.5px; margin: 0; }
+
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+      .s-hero h1 { font-size: 40px; }
+      .steps { grid-template-columns: 1fr; }
+      .why { grid-template-columns: 1fr; }
+      .section-head h2 { font-size: 28px; }
+    }
+  </style>
+</BaseLayout>

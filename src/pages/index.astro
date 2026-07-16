@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout
   wide
   title="OutpostLabs — small, focused apps that do one thing well"
-  description="OutpostLabs is an independent software studio building small, focused apps that solve one real problem well. Home of Resurface (retro action item tracker for Jira), SLAdar (code review SLAs & stale pull request reminders for Bitbucket Cloud), and Berth (isolated dev environments for parallel AI coding agents)."
+  description="OutpostLabs is an independent software studio building small, focused apps that solve one real problem well. Home of Resurface (retro action item tracker for Jira), Tripwire (dependency slip alerts for Jira), SLAdar (code review SLAs & stale pull request reminders for Bitbucket Cloud), and Berth (isolated dev environments for parallel AI coding agents)."
 >
   <!-- HERO -->
   <section class="hero">
@@ -53,6 +53,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p>
             Retro &amp; sprint action items become owned, due-dated Jira issues that resurface until
             they're actually done.
+          </p>
+          <span class="card-link">Learn more →</span>
+        </a>
+
+        <a class="card" href="/tripwire/">
+          <span class="card-logo">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="32" height="32" rx="8" fill="#0E1726" />
+              <path d="M5.5 14.5 L12.5 14.5 L16 20 L19.5 14.5 L26.5 14.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="16" cy="20" r="2.2" fill="#FF9A4A" />
+            </svg>
+          </span>
+          <h3>Tripwire <span class="soon-tag">Coming soon</span></h3>
+          <p>
+            When a Jira issue your team depends on slips — due date pushed, sprint punted, gone
+            stale — Tripwire alerts the right person automatically, before it burns your sprint.
           </p>
           <span class="card-link">Learn more →</span>
         </a>
