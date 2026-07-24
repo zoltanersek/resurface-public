@@ -1,0 +1,600 @@
+---
+// Tripwire documentation. An Astro route so /tripwire/docs/ resolves in dev, preview, and
+// production alike. Shares the OutpostLabs site chrome and palette (navy header, amber
+// accents) with the Resurface and SLAdar docs for a consistent look.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tripwire — Docs | Dependency Slip Alerts for Jira Cloud</title>
+    <meta
+      name="description"
+      content="Documentation for Tripwire: get alerted when a Jira issue your team depends on slips — due date pushed, sprint punted, or gone stale. Every notification type, recipients, anti-spam, the weekly digest, the dashboard, and settings — all inside Atlassian."
+    />
+    <meta name="theme-color" content="#0E1726" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style is:global>
+      :root {
+        --navy: #0e1726;
+        --navy2: #132038;
+        --ink: #101b2e;
+        --slate: #5a6b85;
+        --paper: #f7f9fc;
+        --line: #e7ecf3;
+        --amber1: #ffc24b;
+        --amber2: #ff7a2f;
+        --amber: #ff7a2f;
+        --white: #ffffff;
+        --muted: #a9b8ce;
+        --radius: 12px;
+        --maxw: 880px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--white);
+        font: 16px/1.65 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+          Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--amber2); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+      /* site header */
+      header.site { background: var(--navy); position: sticky; top: 0; z-index: 20; border-bottom: 1px solid #1c2942; }
+      header.site .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+      header.site .brand { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-weight: 800; font-size: 19px; }
+      header.site .brand:hover { text-decoration: none; }
+      header.site .brand .logo { width: 38px; height: 38px; flex: none; }
+      header.site .brand small { display: block; font-weight: 500; font-size: 11px; color: #8da0bc; letter-spacing: 0.2px; margin-top: -2px; }
+      header.site .nav-right { display: flex; align-items: center; gap: 20px; }
+      header.site .nav-right .navlink { color: #c8d5e6; text-decoration: none; font-weight: 600; font-size: 14px; }
+      header.site .nav-right .navlink:hover { color: #fff; }
+      .btn { display: inline-block; font-weight: 700; text-decoration: none; border-radius: 12px; padding: 10px 18px; font-size: 14px; transition: transform 0.06s ease, box-shadow 0.2s ease; }
+      .btn:hover { text-decoration: none; }
+      .btn:active { transform: translateY(1px); }
+      .btn-primary { background: linear-gradient(135deg, var(--amber1), var(--amber2)); color: #2a1400; box-shadow: 0 8px 22px rgba(255, 122, 47, 0.28); }
+
+      /* hero */
+      header.hero { background: radial-gradient(1100px 500px at 80% -10%, #1b2c4b 0%, var(--navy) 55%); color: #fff; padding: 56px 0 48px; }
+      header.hero .brand { display: flex; align-items: center; gap: 14px; }
+      header.hero .brand .logo { width: 48px; height: 48px; flex: none; }
+      header.hero .brand h1 { margin: 0; font-size: 26px; letter-spacing: -0.01em; }
+      header.hero p.tag { margin: 18px 0 0; font-size: 19px; max-width: 640px; color: var(--muted); }
+      header.hero .badges { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+      .badge { display: inline-flex; align-items: center; gap: 8px; background: #16233a; border: 1px solid #2a3a57; color: #d7e1ef; padding: 6px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+
+      /* toc */
+      nav.toc { position: sticky; top: 66px; z-index: 10; background: rgba(255, 255, 255, 0.92); backdrop-filter: saturate(180%) blur(8px); border-bottom: 1px solid var(--line); }
+      nav.toc .wrap { display: flex; flex-wrap: wrap; gap: 4px 18px; padding-top: 12px; padding-bottom: 12px; }
+      nav.toc a { color: var(--slate); font-size: 14px; font-weight: 600; }
+      nav.toc a:hover { color: var(--amber); text-decoration: none; }
+
+      /* sections */
+      main { padding: 8px 0 40px; }
+      section { padding: 34px 0 8px; border-bottom: 1px solid var(--line); }
+      section:last-of-type { border-bottom: 0; }
+      h2 { font-size: 22px; margin: 0 0 6px; letter-spacing: -0.01em; scroll-margin-top: 130px; }
+      h3 { font-size: 16px; margin: 22px 0 4px; }
+      p, ul, ol { color: #344563; }
+      ul.clean { list-style: none; padding-left: 0; }
+      ul.clean li { padding-left: 26px; position: relative; margin: 8px 0; }
+      ul.clean li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--amber2); font-weight: 700; }
+      code { background: var(--paper); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; color: var(--amber2); }
+      .lead { font-size: 18px; color: var(--slate); }
+      .note { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: var(--radius); padding: 14px 16px; margin: 18px 0; }
+      .note strong { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 15px; }
+      th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      th { color: var(--slate); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0; }
+      .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; background: #fff; }
+      .card h3 { margin-top: 0; }
+
+      /* alert sample */
+      .alert { border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: var(--radius); background: #fff; padding: 14px 16px; margin: 12px 0; }
+      .alert .msg { font-size: 14.5px; color: #384356; margin: 0; line-height: 1.55; }
+      .alert .msg strong { color: var(--ink); }
+      .alert .who { display: block; margin-top: 8px; font-size: 12.5px; color: var(--slate); }
+      .mention { color: #1868db; font-weight: 600; background: #e9f0fd; border-radius: 4px; padding: 0 4px; }
+      .pill { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.5px; border-radius: 999px; padding: 2px 9px; vertical-align: 1px; }
+      .p-slip { background: #fdeaea; color: #c02626; }
+      .p-punt { background: #fdf0e0; color: #b6600a; }
+      .p-stale { background: #eef1f6; color: #55637a; }
+      .p-clear { background: #e7f6ec; color: #1a7f42; }
+
+      details { border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 16px; margin: 10px 0; background: #fff; }
+      details summary { cursor: pointer; font-weight: 600; padding: 10px 0; color: var(--ink); }
+      details[open] summary { color: var(--amber); }
+      details p { margin-top: 0; }
+
+      footer.site { background: var(--navy); color: #9fb0c8; padding: 44px 0; font-size: 14px; }
+      footer.site .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+      footer.site .foot a { color: #c8d5e6; text-decoration: none; margin-left: 20px; }
+      footer.site .foot .links a:first-child { margin-left: 0; }
+      footer.site .foot a:hover { color: #fff; }
+
+      @media (max-width: 560px) {
+        header.site .nav-right .navlink { display: none; }
+        footer.site .foot a { margin-left: 0; margin-right: 18px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap nav">
+        <a class="brand" href="/tripwire/" aria-label="Tripwire home">
+          <img class="logo" src="/tripwire/tripwire-logo.svg" alt="" aria-hidden="true" />
+          <span>Tripwire<small>by OutpostLabs.dev</small></span>
+        </a>
+        <div class="nav-right">
+          <a class="navlink" href="/">Home</a>
+          <a class="btn btn-primary" href="/tripwire/">Get notified at launch</a>
+        </div>
+      </div>
+    </header>
+
+    <header class="hero">
+      <div class="wrap">
+        <div class="brand">
+          <img class="logo" src="/tripwire/tripwire-logo.svg" alt="" aria-hidden="true" />
+          <h1>Tripwire Docs</h1>
+        </div>
+        <p class="tag">
+          When an issue your team depends on slips — due date pushed later, punted from a sprint,
+          or gone quiet — Tripwire notifies the dependent team's assignee and lead automatically,
+          right on the issue. No rules to write, no Automation quota, all inside Atlassian.
+        </p>
+        <div class="badges">
+          <span class="badge">Runs on Atlassian</span>
+          <span class="badge">No external data egress</span>
+          <span class="badge">Zero Automation quota</span>
+          <span class="badge">Free tier planned</span>
+          <span class="badge">Coming soon</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <div class="wrap">
+        <a href="#overview">Overview</a>
+        <a href="#start">Getting started</a>
+        <a href="#dependencies">Dependencies</a>
+        <a href="#alerts">Alerts</a>
+        <a href="#recipients">Who gets notified</a>
+        <a href="#antispam">Anti-spam</a>
+        <a href="#digest">Weekly digest</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#settings">Settings</a>
+        <a href="#why">Why an alert fired</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
+      </div>
+    </nav>
+
+    <main class="wrap">
+      <section id="overview">
+        <h2>What Tripwire does</h2>
+        <p class="lead">
+          Your team depends on issues owned by other teams. When one of those blockers slips, Jira
+          writes it to the changelog and tells no one — you find out at sprint review. Tripwire
+          fixes that, without a Slack bot and without any data leaving Atlassian.
+        </p>
+        <p>
+          Tripwire watches the built-in <strong>"blocks"</strong> issue links you already use.
+          When a blocker <strong>slips</strong> — its due date moves later, it gets punted out of a
+          sprint, or it goes quiet for too long — Tripwire posts a blame-free comment on the
+          <em>dependent</em> issue and @-mentions the people who need to know. When the blocker
+          resolves, it tells them they're <strong>unblocked</strong>. It's a focused Forge app for
+          Jira Cloud — one job, done well.
+        </p>
+      </section>
+
+      <section id="start">
+        <h2>Getting started</h2>
+        <p>
+          After a site admin installs Tripwire from the Atlassian Marketplace, it starts working
+          immediately — there is nothing to configure. You'll interact with it in three places:
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>On the issue</h3>
+            <p>Alerts arrive as comments on the dependent issue, @-mentioning the assignee and project lead. Jira delivers them through its normal notifications.</p>
+          </div>
+          <div class="card">
+            <h3>The dashboard</h3>
+            <p><em>Apps → Tripwire</em> — a global page with tabs for <strong>At risk</strong>, <strong>All edges</strong>, <strong>Digest</strong>, and <strong>Settings</strong>.</p>
+          </div>
+          <div class="card">
+            <h3>The digest issue</h3>
+            <p>A per-project <strong>"Dependency Digest"</strong> issue (labelled <code>tripwire-digest</code>) that Tripwire creates lazily to hold the weekly digest and bulk-change summaries.</p>
+          </div>
+        </div>
+        <div class="note">
+          <strong>Works on day one.</strong> Sensible defaults apply before you touch a setting:
+          Tripwire watches the standard <em>Blocks</em> link type, alerts across projects, and is
+          tuned not to spam. Zero-config is a supported way to run it.
+        </div>
+      </section>
+
+      <section id="dependencies">
+        <h2>How dependencies are detected</h2>
+        <p>
+          Tripwire builds a registry of dependency <strong>edges</strong> from your issue links. An
+          edge is a directed pair: a <strong>blocker</strong> (the issue that must be done first)
+          and a <strong>dependent</strong> (the issue waiting on it). It reads the direction from
+          the link so it always alerts the side that is <em>waiting</em>, never the side doing the
+          work.
+        </p>
+        <ul class="clean">
+          <li><strong>Which links.</strong> By default the standard <em>Blocks / is blocked by</em> link type. You can change the watched link types in Settings.</li>
+          <li><strong>Cross-project by default.</strong> The whole point is cross-team dependencies, so out of the box Tripwire focuses on edges where the blocker and dependent live in different projects. You can widen it to same-project dependencies too.</li>
+          <li><strong>Registered silently.</strong> Creating a new "blocks" link just starts tracking — there is no "you created a link" notification (event <code>E7</code>). Removing the link stops tracking, also silently (<code>E8</code>).</li>
+          <li><strong>Self-healing.</strong> A daily reconciliation sweep re-reads your links so a missed real-time event is corrected within a day, deactivated edges are purged after 90 days, and the registry is capped so it never grows without bound.</li>
+        </ul>
+      </section>
+
+      <section id="alerts">
+        <h2>Alerts — every notification Tripwire can post</h2>
+        <p>
+          Every alert is a comment on the <strong>dependent</strong> issue, written to be
+          blame-free — it states what changed, never who is at fault. Here is the complete
+          catalogue.
+        </p>
+
+        <h3>Due-date slip</h3>
+        <p>The blocker's due date moved <em>later</em> by at least your slip threshold.</p>
+        <div class="alert">
+          <p class="msg"><span class="pill p-slip">SLIPPED</span> ⚠️ <strong>Dependency slipped:</strong> PLAT-87 "Payments service migration" — due date moved <strong>Jul&nbsp;12 → Jul&nbsp;26</strong> (14 days later). This issue depends on it. <span class="mention">@maya</span> <span class="mention">@tomas</span></p>
+          <span class="who">Posted on the dependent issue · assignee + project lead notified</span>
+        </div>
+
+        <h3>Due-date removed</h3>
+        <p>The blocker's due date was <em>cleared</em> entirely — often a quiet signal that a commitment has evaporated.</p>
+        <div class="alert">
+          <p class="msg"><span class="pill p-slip">SLIPPED</span> ⚠️ <strong>Dependency lost its due date:</strong> PLAT-87 "Payments service migration" no longer has a due date (was <strong>Jul&nbsp;12</strong>). This issue depends on it. <span class="mention">@maya</span></p>
+          <span class="who">Treated as a slip — there's now no date to plan around</span>
+        </div>
+
+        <h3>Punt to the backlog</h3>
+        <p>The blocker was pulled out of its sprint back into the backlog — no sprint now owns it.</p>
+        <div class="alert">
+          <p class="msg"><span class="pill p-punt">PUNTED</span> ↩️ <strong>Dependency punted to the backlog:</strong> PLAT-87 "Payments service migration" was removed from its sprint. This issue depends on it. <span class="mention">@maya</span></p>
+          <span class="who">Detected from the sprint field changing to empty</span>
+        </div>
+
+        <h3>Punt to a later sprint</h3>
+        <p>The blocker moved from its current sprint to one that starts <em>later</em>. Tripwire reads sprint start dates so it can tell a genuine push-out from routine board hygiene.</p>
+        <div class="alert">
+          <p class="msg"><span class="pill p-punt">PUNTED</span> ↩️ <strong>Dependency moved to a later sprint:</strong> PLAT-87 "Payments service migration" moved from <strong>Sprint&nbsp;24</strong> to <strong>Sprint&nbsp;26</strong>. This issue depends on it. <span class="mention">@maya</span></p>
+          <span class="who">Only fires when the new sprint starts later than the old one</span>
+        </div>
+
+        <h3>Gone quiet (staleness)</h3>
+        <p>An unresolved blocker hasn't been touched — no status, date, or field change — for longer than the stale window (about a week by default). No one moved it; it just went silent.</p>
+        <div class="alert">
+          <p class="msg"><span class="pill p-stale">STALE</span> 🕰️ <strong>Dependency has gone quiet:</strong> PLAT-87 "Payments service migration" hasn't been updated in <strong>9 days</strong> and is still open. This issue depends on it. <span class="mention">@maya</span></p>
+          <span class="who">Surfaced by the daily sweep; clears automatically when the blocker is touched again</span>
+        </div>
+
+        <h3>Unblocked</h3>
+        <p>
+          When a blocker resolves, Tripwire is <em>remaining-blocker aware</em> — it checks whether
+          the dependent still has other open blockers before it declares good news, so it never
+          says "you're clear" while you're still stuck. There are three variants:
+        </p>
+        <div class="alert">
+          <p class="msg"><span class="pill p-clear">CLEARED</span> ☑️ <strong>One blocker resolved</strong> — PLAT-87 is done, but this issue is still waiting on <strong>2 more</strong> (PLAT-91, DATA-12). <span class="mention">@maya</span></p>
+          <span class="who">Partial unblock — progress, but not clear yet</span>
+        </div>
+        <div class="alert">
+          <p class="msg"><span class="pill p-clear">CLEARED</span> 🟢 <strong>Ready to pick up:</strong> the last blocker (PLAT-87) is resolved and nothing else is blocking this issue. It hasn't been started yet. <span class="mention">@maya</span> <span class="mention">@tomas</span></p>
+          <span class="who">Last blocker cleared, dependent not yet in progress</span>
+        </div>
+        <div class="alert">
+          <p class="msg"><span class="pill p-clear">CLEARED</span> ✅ <strong>You're unblocked:</strong> the last blocker (PLAT-87) is resolved. This issue is free to move. <span class="mention">@maya</span></p>
+          <span class="who">Last blocker cleared while the dependent is already in progress</span>
+        </div>
+
+        <h3>Bulk-change summary</h3>
+        <p>
+          When one person triggers a burst of slips at once — a sprint reshuffle that moves a dozen
+          issues — Tripwire folds them into a <strong>single summary</strong> instead of a flood of
+          comments. The summary is posted to the project's Dependency Digest issue (see
+          <a href="#antispam">Anti-spam</a>).
+        </p>
+        <div class="alert">
+          <p class="msg"><span class="pill p-punt">SUMMARY</span> 📦 <strong>12 dependencies shifted</strong> by Sam Smith in a bulk sprint change. Affected dependents: SHOP-142, SHOP-148, WEB-31 … <span class="who" style="display:inline">(see the list below)</span></p>
+          <span class="who">One comment on the digest issue instead of 12 on separate issues</span>
+        </div>
+
+        <div class="note">
+          <strong>Silent by design, too.</strong> Not every change is worth a ping. Registering a
+          new dependency (<code>E7</code>) and removing one (<code>E8</code>) are tracked silently,
+          and a slip on a <em>resolved</em> blocker, an ambiguous change, or a move to an
+          <em>earlier</em> sprint produces <strong>no alert</strong> — Tripwire is deliberately
+          false-alert-averse. When it isn't sure, it stays quiet and records why.
+        </div>
+      </section>
+
+      <section id="recipients">
+        <h2>Who gets notified</h2>
+        <p>
+          Each alert @-mentions the people best placed to react on the <strong>dependent</strong>
+          side, so Jira's own notifications reach them. By default:
+        </p>
+        <table>
+          <thead>
+            <tr><th>Recipient</th><th>When</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>The dependent issue's <strong>assignee</strong></td><td>Always, when there is one — they own the waiting work.</td></tr>
+            <tr><td>The dependent <strong>project lead</strong></td><td>So someone is accountable even if the issue is unassigned.</td></tr>
+            <tr><td><strong>Additional recipients</strong></td><td>Optional extra people you pick per project (e.g. a delivery lead), configured in Settings.</td></tr>
+          </tbody>
+        </table>
+        <p>
+          Recipients are configurable per project — you can turn the assignee or lead mention off,
+          or add named people with the user picker. Tripwire resolves everyone by display name; if
+          a lookup ever fails it degrades gracefully rather than exposing raw account IDs.
+        </p>
+      </section>
+
+      <section id="antispam">
+        <h2>Built not to spam</h2>
+        <p>
+          The fastest way to get an alerting app uninstalled is to make it noisy. Tripwire has four
+          layers of restraint:
+        </p>
+        <ul class="clean">
+          <li><strong>Once per day, per dependency, per kind.</strong> A 24-hour cooldown means the same edge won't alert twice for the same class of change in a day, no matter how many times the field wobbles.</li>
+          <li><strong>Burst folding.</strong> When one actor triggers more than a handful of slips within a few minutes (a bulk board reshuffle), the individual comments are folded into <strong>one</strong> summary on the digest issue.</li>
+          <li><strong>Write-before-post de-duplication.</strong> Tripwire records that it's about to alert <em>before</em> it posts, so a retried or duplicated platform event can never produce a duplicate comment.</li>
+          <li><strong>One-click mute.</strong> Every alert footer links to mute that project. Muted projects post nothing — but the dashboard keeps tracking state, so you still see the truth when you look.</li>
+        </ul>
+        <div class="note">
+          <strong>Muting never loses data.</strong> While a project is muted, edge state and slip
+          counts keep advancing silently. Unmute and the dashboard is already up to date — you just
+          stopped the comments, not the tracking.
+        </div>
+      </section>
+
+      <section id="digest">
+        <h2>The weekly digest</h2>
+        <p>
+          Once a week (on a weekday you choose), Tripwire posts a per-project digest — the Monday
+          catch-up that replaces a cross-team status meeting. Each digest gathers what happened
+          across that project's dependencies:
+        </p>
+        <ul class="clean">
+          <li>New slips and punts since the last digest;</li>
+          <li>Dependencies currently <strong>at risk</strong> (slipped, punted, or stale and still open);</li>
+          <li>Wins — dependencies that got <strong>unblocked</strong>; and</li>
+          <li>Any bulk-change summaries folded during the week.</li>
+        </ul>
+        <p>
+          The digest is posted as a comment on that project's lazily-created <strong>"Dependency
+          Digest"</strong> issue (labelled <code>tripwire-digest</code>), rendered as rich Jira
+          content, and is also available on the dashboard's <strong>Digest</strong> tab. If someone
+          deletes the digest issue, Tripwire detects it and recreates it — the digest never
+          silently dies. You can disable the digest or change its recipients and weekday in Settings.
+        </p>
+      </section>
+
+      <section id="dashboard">
+        <h2>The dashboard</h2>
+        <p>
+          Open <em>Apps → Tripwire</em> for a global page with four tabs — the 10-minute triage view
+          for everything cross-team.
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>At risk</h3>
+            <p>Every dependency currently slipped, punted, or stale and still open — the "what should we worry about" list, with days slipped or days idle.</p>
+          </div>
+          <div class="card">
+            <h3>All edges</h3>
+            <p>The full dependency registry with blocker, dependent, project, state, and last change — filterable, so you can see everything Tripwire is watching.</p>
+          </div>
+          <div class="card">
+            <h3>Digest</h3>
+            <p>The latest per-project digest, rendered in place, so you don't have to hunt for the digest issue.</p>
+          </div>
+          <div class="card">
+            <h3>Settings</h3>
+            <p>Everything below — watched link types, thresholds, recipients, digest, and per-project mute.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="settings">
+        <h2>Settings</h2>
+        <p>From the <strong>Settings</strong> tab you control all of Tripwire's behaviour:</p>
+        <table>
+          <thead>
+            <tr><th>Setting</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Watched link types</strong></td><td>Which issue-link types count as a dependency (default: <em>Blocks</em>).</td></tr>
+            <tr><td><strong>Slip threshold</strong></td><td>How many days a due date must move later before it counts as a slip.</td></tr>
+            <tr><td><strong>Due-date-removed alerts</strong></td><td>Whether clearing a blocker's due date is treated as a slip.</td></tr>
+            <tr><td><strong>Stale window</strong></td><td>How long an untouched, open blocker waits before it's "gone quiet".</td></tr>
+            <tr><td><strong>Lookahead / re-alert windows</strong></td><td>Tune how far ahead Tripwire looks and how it re-surfaces ongoing risk.</td></tr>
+            <tr><td><strong>Cross-project only</strong></td><td>Track only cross-team dependencies, or include same-project ones too.</td></tr>
+            <tr><td><strong>Unblock notifications</strong></td><td>Turn the "ready to pick up" / "you're unblocked" alerts on or off.</td></tr>
+            <tr><td><strong>Recipients (per project)</strong></td><td>Toggle the assignee and project-lead mentions and add extra people with a user picker.</td></tr>
+            <tr><td><strong>Digest</strong></td><td>Enable/disable it, choose the weekday, and set who it notifies.</td></tr>
+            <tr><td><strong>Mute (per project)</strong></td><td>Stop comments for a project while tracking continues in the background.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="why">
+        <h2>Why an alert did — or didn't — fire</h2>
+        <p>
+          The most common support question is "I changed something and got no alert" (or the
+          reverse). Tripwire is deliberately conservative; this table explains the logic.
+        </p>
+        <table>
+          <thead>
+            <tr><th>Situation</th><th>Alert?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Blocker's due date moved <strong>later</strong> by ≥ the threshold</td><td>✅ Due-date slip</td></tr>
+            <tr><td>Blocker's due date moved <strong>earlier</strong>, or by less than the threshold</td><td>❌ Good news / below threshold — no alert</td></tr>
+            <tr><td>Blocker's due date <strong>cleared</strong></td><td>✅ Due-date removed (if enabled)</td></tr>
+            <tr><td>Blocker punted to the <strong>backlog</strong> or a <strong>later</strong> sprint</td><td>✅ Punt</td></tr>
+            <tr><td>Blocker moved to an <strong>earlier / current</strong> sprint</td><td>❌ Not a slip — no alert</td></tr>
+            <tr><td>Open blocker untouched past the stale window</td><td>✅ Gone quiet</td></tr>
+            <tr><td>The change happened on a <strong>resolved</strong> blocker</td><td>❌ Already done — no alert</td></tr>
+            <tr><td>The changed issue is <strong>not a blocker</strong> of anything</td><td>❌ Nothing depends on it — no alert</td></tr>
+            <tr><td>The dependency isn't a <strong>watched link type</strong></td><td>❌ Not tracked — no alert</td></tr>
+            <tr><td>The project is <strong>muted</strong></td><td>❌ Tracked silently — no comment, still on the dashboard</td></tr>
+            <tr><td>Same edge + kind already alerted in the last <strong>24 h</strong></td><td>❌ Cooldown — no duplicate</td></tr>
+            <tr><td>One actor slipped <strong>many</strong> dependencies at once</td><td>✅ Folded into one bulk summary on the digest issue</td></tr>
+            <tr><td>Last blocker resolved</td><td>✅ Unblocked (ready / in-progress / partial)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="privacy">
+        <h2>Privacy &amp; permissions</h2>
+        <p>
+          Tripwire is built on Atlassian Forge and runs entirely inside Atlassian Cloud. It makes
+          <strong>no requests to any external server</strong> and stores only a small dependency
+          layer over your issues (which issue blocks which, the state and slip count, the timestamps
+          and date/sprint snapshots it needs to spot the next change, the anti-spam ledger, and your
+          settings). It does <strong>not</strong> store your issue descriptions, comments, or
+          attachments.
+        </p>
+        <table>
+          <thead>
+            <tr><th>Scope</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>read:jira-work</td><td>Read issues, links, dates, and statuses to detect dependency slips.</td></tr>
+            <tr><td>write:jira-work</td><td>Post the alert comment and maintain the per-project digest issue.</td></tr>
+            <tr><td>read:jira-user</td><td>Resolve display names of assignees, leads, and recipients to @-mention them.</td></tr>
+            <tr><td>read:sprint:jira-software</td><td>Read sprint start dates to distinguish a real punt from routine sprint moves.</td></tr>
+            <tr><td>storage:app</td><td>Persist the dependency layer, digest bookkeeping, and settings in Forge storage.</td></tr>
+          </tbody>
+        </table>
+        <p>
+          See the full <a href="/tripwire/privacy/">Privacy Policy</a>,
+          <a href="/tripwire/terms/">Terms of Service</a>, and
+          <a href="/tripwire/sla/">Support SLA</a>.
+        </p>
+      </section>
+
+      <section id="faq">
+        <h2>FAQ</h2>
+
+        <details>
+          <summary>Do I have to write any rules or Automation?</summary>
+          <p>
+            No. Tripwire works the moment it's installed, using sensible defaults. It watches the
+            "blocks" links you already have — there are no per-project rules to build and it uses
+            <strong>none</strong> of your Jira Automation quota, because it runs on Forge, not
+            Automation.
+          </p>
+        </details>
+
+        <details>
+          <summary>Does Tripwire send anything to Slack or an external service?</summary>
+          <p>
+            No. Tripwire is "Runs on Atlassian" — it makes no external network calls. Alerts are
+            comments on the dependent issue, delivered by Jira's own notifications. Your data never
+            leaves Atlassian.
+          </p>
+        </details>
+
+        <details>
+          <summary>Which link types does it watch?</summary>
+          <p>
+            By default the standard <em>Blocks / is blocked by</em> link type. You can add or change
+            the watched link types in Settings if your team models dependencies differently.
+          </p>
+        </details>
+
+        <details>
+          <summary>Does it work on Jira Standard / Free, without Advanced Roadmaps?</summary>
+          <p>
+            Yes — that's the point. Tripwire works on every Jira Cloud plan and needs no Premium
+            features. The teams that Advanced Roadmaps leaves behind are exactly who it's for.
+          </p>
+        </details>
+
+        <details>
+          <summary>Will it spam my team during a big sprint reshuffle?</summary>
+          <p>
+            No. A 24-hour cooldown caps repeats per dependency, and when one person shifts many
+            dependencies at once the alerts fold into a single summary on the digest issue. You can
+            also mute any project with one click.
+          </p>
+        </details>
+
+        <details>
+          <summary>What's the "Dependency Digest" issue that appeared?</summary>
+          <p>
+            It's an issue Tripwire creates lazily per project (labelled <code>tripwire-digest</code>)
+            to hold the weekly digest and any bulk-change summaries — so those never clutter your
+            real work items. If you delete it, Tripwire recreates it when it next needs it.
+          </p>
+        </details>
+
+        <details>
+          <summary>Why didn't I get an alert for a change I made?</summary>
+          <p>
+            Tripwire is false-alert-averse. It stays quiet for good-news changes (a date moved
+            earlier), changes below your threshold, changes on already-resolved blockers, issues
+            nothing depends on, un-watched link types, muted projects, and anything ambiguous. The
+            table under <a href="#why">"Why an alert fired"</a> lists every case.
+          </p>
+        </details>
+
+        <details>
+          <summary>What does it cost?</summary>
+          <p>
+            A free tier is planned for small teams (currently up to 10 users), with paid tiers above
+            that. Billing is handled entirely by the Atlassian Marketplace.
+          </p>
+        </details>
+      </section>
+
+      <section id="support">
+        <h2>Support</h2>
+        <p>
+          Questions, bugs, or feedback? Email
+          <a href="mailto:support@outpostlabs.dev">support@outpostlabs.dev</a>. We provide
+          best-effort, asynchronous support — see the <a href="/tripwire/sla/">Support SLA</a> for
+          response targets.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site">
+      <div class="wrap foot">
+        <div>© <span id="yr"></span> OutpostLabs.dev — small, focused apps that do one thing well.</div>
+        <div class="links">
+          <a href="/">OutpostLabs</a>
+          <a href="/tripwire/">Tripwire</a>
+          <a href="/tripwire/privacy/">Privacy</a>
+          <a href="/tripwire/terms/">Terms</a>
+          <a href="/tripwire/sla/">SLA</a>
+        </div>
+      </div>
+    </footer>
+    <script is:inline>
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
