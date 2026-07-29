@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Kit (ConvertKit) form endpoint — same OutpostLabs list Resurface & SLAdar use.
-const kitAction = 'https://app.kit.com/forms/9637468/subscriptions';
+// Live Atlassian Marketplace listing.
+const marketplaceUrl =
+  'https://marketplace.atlassian.com/apps/709393635/tripwire-dependency-slip-alerts-for-jira';
 
 const whys = [
   {
@@ -27,7 +28,7 @@ const whys = [
 <BaseLayout
   wide
   title="Tripwire — Dependency Slip Alerts for Jira | OutpostLabs"
-  description="Tripwire alerts the right person when a Jira issue your team depends on slips — due date pushed, sprint punted, or gone stale. Blame-free comments, a weekly digest, and an at-risk dashboard. Zero Automation quota, works on Jira Standard. Coming soon — get notified at launch."
+  description="Tripwire alerts the right person when a Jira issue your team depends on slips — due date pushed, sprint punted, or gone stale. Blame-free comments, a weekly digest, and an at-risk dashboard. Zero Automation quota, works on Jira Standard. Free for up to 10 users on the Atlassian Marketplace."
   canonical="/tripwire/"
   ogType="website"
   ogImage="https://outpostlabs.dev/tripwire/tripwire-logo.svg"
@@ -42,7 +43,8 @@ const whys = [
     description:
       'When an issue your team depends on slips — due date pushed later, punted from a sprint, or gone stale — Tripwire notifies the dependent team\'s assignee and lead automatically, right on the issue. No Automation rules, no quota used, works on every Jira Cloud plan.',
     url: 'https://outpostlabs.dev/tripwire/',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free tier planned for small teams' },
+    downloadUrl: marketplaceUrl,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free for up to 10 users, then per-user pricing' },
     publisher: { '@type': 'Organization', name: 'OutpostLabs', url: 'https://outpostlabs.dev' },
   })} />
 
@@ -50,7 +52,7 @@ const whys = [
   <section class="s-hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow"><span class="soon-dot"></span>Coming soon · Jira Cloud</p>
+        <p class="eyebrow"><span class="soon-dot"></span>Now on the Atlassian Marketplace · Jira Cloud</p>
         <h1>Put a tripwire on<br /><span class="amber">every dependency.</span></h1>
         <p class="lede">
           Your team depends on issues owned by other teams. When one slips — due date pushed,
@@ -58,14 +60,14 @@ const whys = [
           "blocks" links you already use and notifies the dependent team's assignee and lead
           the minute a blocker slips. Zero rules to write, zero Automation quota used.
         </p>
-        <form class="notify" action={kitAction} method="post" target="_blank" rel="noopener">
-          <input type="email" name="email_address" placeholder="you@company.com" aria-label="Email address" required />
-          <button class="btn btn-primary" type="submit">Notify me at launch</button>
-        </form>
+        <div class="cta-row">
+          <a class="btn btn-primary" href={marketplaceUrl}>Install free on the Atlassian Marketplace</a>
+          <a class="btn btn-ghost" href="/tripwire/docs/">Read the docs</a>
+        </div>
         <div class="chips">
           <span class="chip"><span class="dot"></span>Runs on Atlassian</span>
           <span class="chip">No data leaves Atlassian</span>
-          <span class="chip">Free tier planned</span>
+          <span class="chip">Free for up to 10 users</span>
         </div>
       </div>
 
@@ -157,16 +159,15 @@ const whys = [
     </div>
   </section>
 
-  <!-- NOTIFY CTA BAND -->
+  <!-- INSTALL CTA BAND -->
   <section class="band-wrap">
     <div class="band">
-      <h2>Be first to catch the silent slip.</h2>
-      <p>Tripwire is in active development for Jira Cloud. Drop your email and we'll tell you the day it lands on the Marketplace — no spam, unsubscribe anytime.</p>
-      <form class="notify notify-dark" action={kitAction} method="post" target="_blank" rel="noopener">
-        <input type="email" name="email_address" placeholder="you@company.com" aria-label="Email address" required />
-        <button class="btn btn-primary" type="submit">Notify me at launch</button>
-      </form>
-      <p class="fineprint">Powered by Kit. We'll only email you about Tripwire &amp; OutpostLabs updates.</p>
+      <h2>Catch the next silent slip.</h2>
+      <p>Install Tripwire and the team waiting on a blocker finds out the minute it moves. No rules to write, nothing to configure — it works on the "blocks" links you already use.</p>
+      <div class="cta-row cta-center">
+        <a class="btn btn-primary" href={marketplaceUrl}>Install free on the Atlassian Marketplace</a>
+      </div>
+      <p class="fineprint">Free for up to 10 users · Works on every Jira Cloud plan</p>
     </div>
   </section>
 
@@ -187,11 +188,11 @@ const whys = [
     .s-hero h1 .amber { background: linear-gradient(135deg, var(--amber1), var(--amber2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .lede { font-size: 19px; color: var(--muted); max-width: 540px; margin: 0 0 26px; }
 
-    /* notify form */
-    .notify { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 22px; }
-    .notify input[type=email] { flex: 1; min-width: 240px; max-width: 340px; padding: 14px 16px; border: 1.5px solid #2a3a57; background: #0f1a2e; color: #fff; border-radius: 12px; font-size: 15px; font-family: inherit; }
-    .notify input[type=email]::placeholder { color: #6b7c99; }
-    .notify input[type=email]:focus { outline: none; border-color: var(--amber); }
+    /* install CTAs */
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 0 0 22px; }
+    .cta-center { justify-content: center; }
+    .btn-ghost { background: transparent; color: #d7e1ef; border: 1.5px solid #2a3a57; }
+    .btn-ghost:hover { border-color: var(--amber); color: #fff; }
     .chips { display: flex; flex-wrap: wrap; gap: 10px; }
     .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #d7e1ef; background: #16233a; border: 1px solid #2a3a57; border-radius: 20px; padding: 7px 14px; }
     .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--amber1), var(--amber2)); }
@@ -239,7 +240,7 @@ const whys = [
     .band { max-width: 1032px; margin: 0 auto; background: var(--navy); color: #fff; text-align: center; border-radius: 24px; padding: 56px 28px; }
     .band h2 { font-size: 32px; letter-spacing: -0.6px; margin: 0 0 10px; }
     .band p { color: var(--muted); margin: 0 0 22px; font-size: 17px; max-width: 620px; margin-left: auto; margin-right: auto; }
-    .notify-dark { justify-content: center; margin-bottom: 12px; }
+    .band .cta-row { margin-bottom: 12px; }
     .fineprint { color: #8a99ad; font-size: 12.5px; margin: 0; }
 
     @media (max-width: 860px) {
